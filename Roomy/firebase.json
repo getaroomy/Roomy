@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "roomy-e2f16",
     "public": "build",
     "ignore": [
       "firebase.json",

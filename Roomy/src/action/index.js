@@ -2,7 +2,8 @@ import db, { auth, provider, storage, firebase } from '../firebase';
 import { SET_LOADING_STATUS, SET_USER, GET_ARTICLES, GET_RENTALS, GET_ROOMMATES, SET_OTHER_USER } from './actionType';
 import 'firebase/firestore';
 
-const serverURL = 'https://server-5te64e4pdq-uw.a.run.app';
+const serverURL = process.env.REACT_APP_SERVER_URL;
+const geoCodeToken = process.env.REACT_APP_GEOCODE_TOKEN;
 
 export function setUser(payload) {
     return {
@@ -462,7 +463,6 @@ export function postRental(payload) {
         Promise.all(photos).then(async (urls) => {
             photos = urls;
             const { address } = payload;
-            const geoCodeToken = 'pk.eyJ1IjoibWF0dGhld2dhaW0iLCJhIjoiY2xhYXN6ZnNhMGEzYzNwcnoycjBlZmlnMSJ9.VMZ9zv6-BBkRG_kcYx9naQ';
             await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${geoCodeToken}`)
                 .then((resp) => resp.json())
                 .then((data) => {

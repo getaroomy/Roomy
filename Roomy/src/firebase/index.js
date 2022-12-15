@@ -4,13 +4,13 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyDAk22Df4AN8xwwK0PNIcztgqaJRArwWDQ',
-    authDomain: 'roomy-2d029.firebaseapp.com',
-    projectId: 'roomy-2d029',
-    storageBucket: 'roomy-2d029.appspot.com',
-    messagingSenderId: '155903804482',
-    appId: '1:155903804482:web:8d5f1fe298c285665699db',
-    measurementId: 'G-TG68SYRE94',
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 firebase.initializeApp(firebaseConfig);
