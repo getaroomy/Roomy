@@ -28,7 +28,7 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MGAIM_ROOMY }}'
           channelId: live
           projectId: mgaim-roomy
-  run_react_tests:
+  run_frontend_tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
