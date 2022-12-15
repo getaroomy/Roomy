@@ -80,29 +80,31 @@ export function signInAPI() {
         auth.signInWithPopup(provider)
             .then((userAuth) => {
                 const docRef = db.collection('profiles').doc(userAuth.user.uid);
-                docRef.get().then((docIncoming) => {
+                docRef.get().then(async (docIncoming) => {
                     if (docIncoming.exists) {
                         userAuth.user.userInfo = docIncoming.data();
                         dispatch(setUser(userAuth.user));
                     } else {
-                        setUserInfo(userAuth.user.uid, 'Renter', userAuth.user.displayName, userAuth.user.photoURL);
-                        userAuth.user.userInfo = {
-                            looking: true,
-                            displayName: userAuth.user.displayName,
-                            status: 'Renter',
-                            uid: userAuth.user.uid,
-                            photoURL: userAuth.user.photoURL,
-                            experiences: [],
-                            preferences: {
-                                roomWith: '',
-                                pets: '',
-                                smoking: '',
-                            },
-                            phoneNumber: '',
-                            gender: '',
-                            bio: '',
-                        };
-                        dispatch(setUser(userAuth.user));
+                        const doneMakingProfile = await setUserInfo(userAuth.user.uid, 'Renter', userAuth.user.displayName, userAuth.user.photoURL);
+                        if(doneMakingProfile){
+                            userAuth.user.userInfo = {
+                                looking: true,
+                                displayName: userAuth.user.displayName,
+                                status: 'Renter',
+                                uid: userAuth.user.uid,
+                                photoURL: userAuth.user.photoURL,
+                                experiences: [],
+                                preferences: {
+                                    roomWith: '',
+                                    pets: '',
+                                    smoking: '',
+                                },
+                                phoneNumber: '',
+                                gender: '',
+                                bio: '',
+                            };
+                            dispatch(setUser(userAuth.user));
+                        }
                     }
                 }).catch((error) => {
                     console.log('Error getting document:', error);
@@ -434,6 +436,7 @@ export async function setUserInfo(uid, userType, displayName, photoURL) {
         console.log(error);
         alert('Problem setting user info');
     }
+    return true;
 }
 
 async function uploadImage(img) {
