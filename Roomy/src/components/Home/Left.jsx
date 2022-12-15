@@ -87,7 +87,7 @@ function Left(props) {
                     <a>
                         <Photo photoUrl={photoUrl ? photoUrl : '/images/user.svg'} />
                         <Link>
-                            Welcome,
+                            Welcome, 
                             {user ? user.displayName : 'there'}
                             !
                         </Link>
