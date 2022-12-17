@@ -80,7 +80,11 @@ def get_articles():
     Return all main page posts
     """
     try:
-        query = db.collection(u'articles').order_by(u'actor.date', direction=firestore.Query.DESCENDING)
+        query = db.collection(u'articles').order_by(u'actor.date', direction=firestore.Query.DESCENDING).limit(10)
+        last_post_id = request.form.get('last_post')
+        if last_post_id:
+            last_snapshot = db.collection(u'articles').document(last_post_id).get()
+            query = query.start_after(last_snapshot)
         results = query.stream()
         posts = []
         ids = []
