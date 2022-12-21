@@ -1,4 +1,4 @@
-import db, { auth, provider, storage, firebase } from '../firebase';
+import db, { auth, provider, storage } from '../firebase';
 import { SET_LOADING_STATUS, SET_USER, GET_ARTICLES, GET_SINGLE_ARTICLE ,GET_RENTALS, GET_ROOMMATES, SET_OTHER_USER } from './actionType';
 import 'firebase/firestore';
 
@@ -7,9 +7,7 @@ const serverURL = process.env.REACT_APP_SERVER_URL;
 const geoCodeToken = process.env.REACT_APP_GEOCODE_TOKEN;
 
 // Pagination Variables
-let last_post = '';
-let first_rental = '';
-let last_rental = '';
+let last_post = '';     // When scrolling on main page, this will be the first post to query after
 let rental_starts = []; // Array keeping track of previous 1'st rental on page for pagination
 
 export function setUser(payload) {
@@ -382,13 +380,11 @@ export function getRentalsAPI(first='',last='',direction='next') {
     return async (dispatch) => {
         dispatch(setLoading(true));
         try {
-            let prevHead = '';
+            let prevHead = ''; // Previous 1'st rental post of last visited page
             if(direction == 'next'){
-                if(first) rental_starts.push(first);
+                if(first.length) rental_starts.push(first);
             } else {
-                if (rental_starts.length > 0){
-                    prevHead = rental_starts.pop();
-                }
+                if (rental_starts.length) prevHead = rental_starts.pop();
             }
             const data = new FormData();
             data.append('last_post', direction == 'next' ? last : prevHead);
@@ -399,8 +395,8 @@ export function getRentalsAPI(first='',last='',direction='next') {
             });
             const results = await response.json();
             const rentals = results.rentals;
-            rentals.map((x)=>{
-                x.date = new Date(x.date);
+            rentals.map((post)=>{
+                post.date = new Date(post.date);
             });
             const ids = results.ids;
             dispatch(getRentals(rentals, ids));
