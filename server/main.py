@@ -34,19 +34,23 @@ def get_rentals():
     Return all available rentals
     """
     try:
-        query = db.collection(u'rentals').order_by(u'date', direction=firestore.Query.DESCENDING)
+        query = db.collection(u'rentals').order_by(u'date', direction=firestore.Query.DESCENDING).limit(25)
+        last_post_id = request.form.get('last_post')
+        if last_post_id and len(last_post_id) > 0:
+            last_snapshot = db.collection(u'rentals').document(last_post_id).get()
+            query = query.start_at(last_snapshot)
         results = query.stream()
         rentals = []
         ids = []
         for res in results:
-            ids.append(res.id)
+            if res:
+                ids.append(res.id)
+                # Attach profile pic to posts
+                curr_rental = res.to_dict()
+                curr_profile = db.collection(u'profiles').document(curr_rental[u'poster']).get()
+                curr_rental[u'profilePic'] = curr_profile.to_dict()[u'photoURL']
 
-            # Attach profile pic to posts
-            curr_rental = res.to_dict()
-            curr_profile = db.collection(u'profiles').document(curr_rental[u'poster']).get()
-            curr_rental[u'profilePic'] = curr_profile.to_dict()[u'photoURL']
-
-            rentals.append(curr_rental)
+                rentals.append(curr_rental)
         return jsonify({"ids": ids, "rentals": rentals}), 200
     except Exception as e:
         return jsonify({f"An error occured: {e}"}), 400
