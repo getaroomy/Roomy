@@ -1,9 +1,14 @@
-import db, { auth, provider, storage, firebase } from '../firebase';
-import { SET_LOADING_STATUS, SET_USER, GET_ARTICLES, GET_RENTALS, GET_ROOMMATES, SET_OTHER_USER } from './actionType';
+import db, { auth, provider, storage } from '../firebase';
+import { SET_LOADING_STATUS, SET_USER, GET_ARTICLES, GET_SINGLE_ARTICLE ,GET_RENTALS, GET_ROOMMATES, SET_OTHER_USER } from './actionType';
 import 'firebase/firestore';
 
+// ENV Variables
 const serverURL = process.env.REACT_APP_SERVER_URL;
 const geoCodeToken = process.env.REACT_APP_GEOCODE_TOKEN;
+
+// Pagination Variables
+let last_post = '';     // When scrolling on main page, this will be the first post to query after
+let rental_starts = []; // Array keeping track of previous 1'st rental on page for pagination
 
 export function setUser(payload) {
     return {
@@ -22,6 +27,14 @@ export function setLoading(status) {
 export function getArticles(payload, id) {
     return {
         type: GET_ARTICLES,
+        payload,
+        id,
+    };
+}
+
+export function getSingleArticle(payload, id) {
+    return {
+        type: GET_SINGLE_ARTICLE,
         payload,
         id,
     };
@@ -295,13 +308,22 @@ export function getArticlesAPI(pid = null) {
         dispatch(setLoading(true));
         if (pid === null) { // Post on home page
             try {
-                const response = await fetch(`${serverURL}/get_articles`);
+                const data = new FormData();
+                data.append('last_post', last_post);
+                const response = await fetch(`${serverURL}/get_articles`, {
+                    mode: 'cors',
+                    method: 'POST',
+                    body: data
+                });
                 const results = await response.json();
                 const posts = results.posts;
                 posts.map((post)=>{
                     post.actor.date = new Date(post.actor.date);
                 });
                 const ids = results.ids;
+                if(ids.length > 0){
+                    last_post = ids[ids.length-1];
+                }
                 dispatch(getArticles(posts, ids));
             } catch (error) {
                 console.log(error);
@@ -321,7 +343,7 @@ export function getArticlesAPI(pid = null) {
                 const posts = results.posts;
                 posts.actor.date = new Date(posts.actor.date);
                 const ids = results.ids;
-                dispatch(getArticles([posts], [ids]));
+                dispatch(getSingleArticle([posts], [ids]));
             } catch (error) {
                 console.log(error);
                 alert('Problem loading posts');
@@ -354,15 +376,27 @@ export function updateArticleAPI(payload, onSinglePostPage) {
     };
 }
 
-export function getRentalsAPI() {
+export function getRentalsAPI(first='',last='',direction='next') {
     return async (dispatch) => {
         dispatch(setLoading(true));
         try {
-            const response = await fetch(`${serverURL}/get_rentals`);
+            let prevHead = ''; // Previous 1'st rental post of last visited page
+            if(direction == 'next'){
+                if(first.length) rental_starts.push(first);
+            } else {
+                if (rental_starts.length) prevHead = rental_starts.pop();
+            }
+            const data = new FormData();
+            data.append('last_post', direction == 'next' ? last : prevHead);
+            const response = await fetch(`${serverURL}/get_rentals`, {
+                mode: 'cors',
+                method: 'POST',
+                body: data
+            });
             const results = await response.json();
             const rentals = results.rentals;
-            rentals.map((x)=>{
-                x.date = new Date(x.date);
+            rentals.map((post)=>{
+                post.date = new Date(post.date);
             });
             const ids = results.ids;
             dispatch(getRentals(rentals, ids));

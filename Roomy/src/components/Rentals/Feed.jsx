@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { saveProperty } from '../../action'; // Like handler in the future
+import { saveProperty, getRentalsAPI } from '../../action'; // Like handler in the future
 import { displayTime } from '../../action/commonFunctions';
 import RentalPostalModal from './RentalPostalModal';
 import ImageDisplay from '../Misc/ImageDisplay';
 import { connect } from 'react-redux';
+import {IconButton} from "@mui/material";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 const Container = styled.div`
     flex-direction: column;
-    /* background-color: white; */
 `;
 
 const CommonBox = styled.div`
@@ -217,10 +219,13 @@ const Body = styled.div`
     }
 `;
 
+const NoLinkStyling = {
+    textDecoration: 'none'
+}
+
 function Feed(props) {
     const [showModal, setShowModal] = useState('close');
     const [bookmarkMap, setBookmarkMap] = useState(new Map());
-    const [done, setDone] = useState(false);
     const user = props ? props.user : null;
     const userInfo = user ? user.userInfo : null;
     const photoUrl = user ? user.photoURL : '/images/photo.svg';
@@ -274,6 +279,12 @@ function Feed(props) {
         setBookmarkMap(temp_savedProperties);
     };
 
+    const getRentalsInDirection = (direction) => {
+        const first = (props.ids && props.ids.length) ? props.ids[0] : '';
+        const last = (props.ids && props.ids.length) ? props.ids[props.ids.length - 1] : '';
+        props.getRentals(first, last, direction)
+    };
+
     return (
         <Container>
             <CreateRental>
@@ -293,7 +304,7 @@ function Feed(props) {
                      && props.rentals.map((rental, key) => (
                          <Rental id={key} key={key}>
                              <Header>
-                                 <a href={rental.poster && `/profile/${rental.poster}`} style={{ textDecoration: 'none' }}>
+                                 <a href={rental.poster && `/profile/${rental.poster}`} style={NoLinkStyling}>
                                      {rental.profilePic ? <img src={rental.profilePic} alt="" /> : <img src="/images/user.svg" alt="" />}
                                      <div>
                                          <h3>{rental.title}</h3>
@@ -326,15 +337,24 @@ function Feed(props) {
                              </RentalDetails>
                          </Rental>
                      ))}
+                     <IconButton aria-label="left-icon" size="large" onClick={()=>getRentalsInDirection('prev')}>
+                        <KeyboardArrowLeftIcon fontSize="inherit" />
+                    </IconButton>
+                    <IconButton aria-label="right-icon" size="large" onClick={()=>getRentalsInDirection('next')}>
+                        <KeyboardArrowRightIcon fontSize="inherit" />
+                    </IconButton>
             </Content>
         </Container>
     );
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+    rentals: state.rentalState.rentals,
+});
 
 const mapDispatchToProps = (dispatch) => ({
     saveProperty: (id, save) => dispatch(saveProperty(id, save)),
+    getRentals: (first=null,last=null,direction='next') => dispatch(getRentalsAPI(first, last, direction))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

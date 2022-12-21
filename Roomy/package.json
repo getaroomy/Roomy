@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.10.17",
     "@react-google-maps/api": "^2.16.0",
     "@testing-library/jest-dom": "^5.12.0",
@@ -15,6 +16,7 @@
     "firebase-tools": "^1.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.4",
     "react-remove-scroll-bar": "^2.3.4",
