@@ -31,7 +31,7 @@ def get_other_user():
 @app.route('/get_rentals', methods=['POST','GET'])
 def get_rentals():
     """
-    Return all available rentals
+    Return all available rentals, 25 at a time
     """
     try:
         query = db.collection(u'rentals').order_by(u'date', direction=firestore.Query.DESCENDING).limit(25)
