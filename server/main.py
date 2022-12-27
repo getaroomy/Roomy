@@ -13,8 +13,8 @@ db = firestore.client()
 
 @app.route('/get_other_user', methods=['POST','GET'])
 def get_other_user():
-    """
-    Request Input: uid (string)\n
+    """Request Input: uid (string)
+    
     Return other person's profile data on profile page
     """
     try:
@@ -30,9 +30,7 @@ def get_other_user():
 
 @app.route('/get_rentals', methods=['POST','GET'])
 def get_rentals():
-    """
-    Return all available rentals, 25 at a time
-    """
+    """Return all available rentals, 25 at a time"""
     try:
         query = db.collection(u'rentals').order_by(u'date', direction=firestore.Query.DESCENDING).limit(25)
         last_post_id = request.form.get('last_post')
@@ -57,9 +55,7 @@ def get_rentals():
 
 @app.route('/get_roommates', methods=['POST','GET'])
 def get_roommates():
-    """
-    Return all available roommates
-    """
+    """Return all available roommates"""
     try:
         query = db.collection(u'roommates').order_by(u'date', direction=firestore.Query.DESCENDING)
         results = query.stream()
@@ -80,9 +76,7 @@ def get_roommates():
 
 @app.route('/get_articles', methods=['POST','GET'])
 def get_articles():
-    """
-    Return all main page posts
-    """
+    """Return all main page posts"""
     try:
         query = db.collection(u'articles').order_by(u'actor.date', direction=firestore.Query.DESCENDING).limit(10)
         last_post_id = request.form.get('last_post')
@@ -102,8 +96,8 @@ def get_articles():
 
 @app.route('/get_single_article', methods=['POST','GET'])
 def get_single_article():
-    """
-    Request Input: pid (string)\n
+    """Request Input: pid (string)
+
     Return single main page post
     """
     try:
@@ -116,8 +110,8 @@ def get_single_article():
 
 @app.route('/post_article', methods=['POST'])
 def post_article():
-    """
-    Request Input: article (dictionary)\n
+    """Request Input: article (dictionary)
+
     Posts single main page post
     """
     try:
@@ -130,8 +124,8 @@ def post_article():
 
 @app.route('/post_rental', methods=['POST'])
 def post_rental():
-    """
-    Request Input: rental (dictionary)\n
+    """Request Input: rental (dictionary)
+
     Posts single rental advertisement
     """
     try:
@@ -144,8 +138,8 @@ def post_rental():
 
 @app.route('/post_roommate', methods=['POST'])
 def post_roommate():
-    """
-    Request Input: roommate (dictionary)\n
+    """Request Input: roommate (dictionary)
+
     Posts single roommate advertisement
     """
     try:
@@ -158,8 +152,8 @@ def post_roommate():
 
 @app.route('/set_user_info', methods=['POST'])
 def set_user_info():
-    """
-    Request Input: user_info (dictionary)\n
+    """Request Input: user_info (dictionary)
+
     Initially set user info when first creating account
     """
     try:
@@ -172,8 +166,8 @@ def set_user_info():
 
 @app.route('/update_profile_data', methods=['POST'])
 def update_profile_data():
-    """
-    Request Input: user_info (dictionary)\n
+    """Request Input: user_info (dictionary)
+
     Update existing user info
     """
     try:
@@ -187,8 +181,8 @@ def update_profile_data():
 
 @app.route('/update_article', methods=['POST'])
 def update_article():
-    """
-    Request Input: article_info (dictionary)\n
+    """Request Input: article_info (dictionary)
+
     Update existing post on main page
     """
     try:
@@ -202,8 +196,8 @@ def update_article():
 
 @app.route('/save_property', methods=['POST'])
 def save_property():
-    """
-    Request Input: uid (string), key (string), save (string)\n
+    """Request Input: uid (string), key (string), save (string)
+
     Add / remove given property from user saved property list
     """
     try:
@@ -225,8 +219,8 @@ def save_property():
 
 @app.route('/post_experience', methods=['POST'])
 def post_experience():
-    """
-    Request Input: target_uid (string), exp (dictionary)\n
+    """Request Input: target_uid (string), exp (dictionary)
+
     Add experience with another user
     """
     try:
