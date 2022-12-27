@@ -348,13 +348,9 @@ function Feed(props) {
     );
 }
 
-const mapStateToProps = (state) => ({
-    rentals: state.rentalState.rentals,
-});
-
 const mapDispatchToProps = (dispatch) => ({
     saveProperty: (id, save) => dispatch(saveProperty(id, save)),
     getRentals: (first=null,last=null,direction='next') => dispatch(getRentalsAPI(first, last, direction))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default connect(null, mapDispatchToProps)(Feed);

@@ -2,7 +2,7 @@ import db, { auth, provider, storage } from '../firebase';
 import { SET_LOADING_STATUS, SET_USER, GET_ARTICLES, GET_SINGLE_ARTICLE ,GET_RENTALS, GET_ROOMMATES, SET_OTHER_USER } from './actionType';
 import 'firebase/firestore';
 
-// ENV Variables
+/* eslint-disable no-undef */
 const serverURL = process.env.REACT_APP_SERVER_URL;
 const geoCodeToken = process.env.REACT_APP_GEOCODE_TOKEN;
 
@@ -367,7 +367,7 @@ export function updateArticleAPI(payload, onSinglePostPage) {
                     update: payload.update,
                 })}
             );
-            const results = await response.json();
+            await response.json();
             dispatch(getArticlesAPI(onSinglePostPage ? payload.id : null));
         } catch (error) {
             console.log(error);
@@ -381,13 +381,13 @@ export function getRentalsAPI(first='',last='',direction='next') {
         dispatch(setLoading(true));
         try {
             let prevHead = ''; // Previous 1'st rental post of last visited page
-            if(direction == 'next'){
+            if(direction === 'next'){
                 if(first.length) rental_starts.push(first);
             } else {
                 if (rental_starts.length) prevHead = rental_starts.pop();
             }
             const data = new FormData();
-            data.append('last_post', direction == 'next' ? last : prevHead);
+            data.append('last_post', direction === 'next' ? last : prevHead);
             const response = await fetch(`${serverURL}/get_rentals`, {
                 mode: 'cors',
                 method: 'POST',

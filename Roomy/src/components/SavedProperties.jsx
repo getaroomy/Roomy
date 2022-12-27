@@ -43,10 +43,18 @@ const FeedWrapper = styled.div`
 
 function SavedProperties(props) {
     const [scrollKey, setScrollKey] = useState(0);
+    const [rentals, setRentals] = useState([]);
+    const [ids, setIds] = useState([]);
+
 
     useEffect(() => {
         props.getRentals();
     }, []);
+
+    useEffect(()=>{
+        setRentals(getSavedRentals());
+        setIds(getSavedIds());
+    },[props.rentals]);
 
     function handleClickScroll(key) {
         setScrollKey(key);
@@ -60,8 +68,10 @@ function SavedProperties(props) {
     }
 
     function getSavedRentals() {
-        while (props.rentals && savedProperties) {
-            return props.rentals.filter((rental, key) => (savedProperties && savedProperties.includes(props.ids[key])));
+        if (props.rentals && savedProperties) {
+            return props.rentals.filter((_, key) => (savedProperties && savedProperties.includes(props.ids[key])));
+        } else {
+            return [];
         }
     }
 
@@ -80,15 +90,15 @@ function SavedProperties(props) {
                 </SidebarWrapper>
 
                 <MapWrapper>
-                    <Map rentals={getSavedRentals()} handleClickScroll={handleClickScroll} />
+                    <Map rentals={rentals} handleClickScroll={handleClickScroll} />
                 </MapWrapper>
 
                 <FeedWrapper>
                     <Feed
                         user={props.user}
-                        rentals={getSavedRentals()}
+                        rentals={rentals}
                         loading={props.loading}
-                        ids={getSavedIds()}
+                        ids={ids}
                         scrollKey={scrollKey}
                         allowposting={false}
                     />
