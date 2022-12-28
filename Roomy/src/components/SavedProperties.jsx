@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Redirect } from 'react-router';
 import { RemoveScrollBar } from 'react-remove-scroll-bar';
-import { getUserAuth, getRentalsAPI } from '../action';
+import { getUserAuth, getRentalsAPI, setActiveTab } from '../action';
 import Header from './Misc/Header';
 import Sidebar from './Misc/Sidebar';
 import Feed from './Rentals/Feed';
@@ -49,6 +49,7 @@ function SavedProperties(props) {
 
     useEffect(() => {
         props.getRentals();
+        props.setActiveTab('Saved Properties');
     }, []);
 
     useEffect(()=>{
@@ -59,7 +60,6 @@ function SavedProperties(props) {
     function handleClickScroll(key) {
         setScrollKey(key);
     }
-    // props.rentals.filter((rental, key) => (savedProperties && savedProperties.includes(props.ids[key])))}
 
     const savedProperties = props.user ? props.user.userInfo.savedProperties : null;
 
@@ -120,6 +120,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getUserAuth: () => dispatch(getUserAuth()),
     getRentals: () => dispatch(getRentalsAPI()),
+    setActiveTab: (tab) => dispatch(setActiveTab(tab)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedProperties);

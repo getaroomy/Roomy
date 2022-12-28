@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useParams, Redirect } from 'react-router-dom';
 import db, { auth } from '../firebase';
-import { getOtherUser, postExperience, updateProfileData } from '../action';
+import { getOtherUser, postExperience, updateProfileData, setActiveTab } from '../action';
 import { formatPhoneNumber } from '../action/commonFunctions';
 import Sidebar from './Misc/Sidebar';
 import Header from './Misc/Header';
-import {FormControl, FormLabel, FormControlLabel, FormGroup, 
+import {FormControl, FormLabel, FormControlLabel, FormGroup,
     InputLabel, Input, RadioGroup, Radio, Switch, Divider, ListItem,
     ListItemAvatar, Avatar, ListItemText, TextField, Typography} from '@mui/material';
 
@@ -132,7 +132,7 @@ const PurpleTextField = styled(TextField)({
     },
     '& .MuiOutlinedInput-root': {
         '&.Mui-focused fieldset': {
-        borderColor: 'purple',
+            borderColor: 'purple',
         },
     },
 });
@@ -179,6 +179,10 @@ function Profile(props) {
             setSmoking(otherUser.preferences ? otherUser.preferences.smoking : null);
         }
     }, [otherUser]);
+
+    useEffect(()=>{
+        props.setActiveTab('Profile');
+    });
 
     const changeTo = (uType) => {
         db.collection('profiles').doc(auth.currentUser.uid).update({
@@ -256,7 +260,7 @@ function Profile(props) {
                         <Title>Profile Visibility</Title>
                         <span>
                             <FormGroup sx={{ m: 2 }}>
-                                <FormControlLabel control={<Switch checked={visibility} onChange={(e)=>setProfileVisibility(e.target.checked)} />} label={visibility ? "Public" : "Private" } />
+                                <FormControlLabel control={<Switch checked={visibility} onChange={(e)=>setProfileVisibility(e.target.checked)} />} label={visibility ? 'Public' : 'Private' } />
                             </FormGroup>
                         </span>
                     </CommunityCard>
@@ -292,7 +296,7 @@ function Profile(props) {
                                                 <>
                                                     <div>
                                                         <PurpleTextField multiline rows={4} maxRows={6} variant="outlined" label="Bio" margin="dense" placeholder='Tell Us About Yourself' 
-                                                        value={info} onChange={(e) => changeBio(e.target.value)} id="bio" />
+                                                            value={info} onChange={(e) => changeBio(e.target.value)} id="bio" />
                                                     </div>
                                                     <div>
                                                         <PurpleTextField label="Phone Number" margin="dense" placeholder='1112223333' variant="outlined" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} id="phoneNumber" />
@@ -449,6 +453,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getOtherUser: (uid) => dispatch(getOtherUser(uid)),
+    setActiveTab: (tab) => dispatch(setActiveTab(tab)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

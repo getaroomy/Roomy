@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import Header from './Misc/Header';
 import Sidebar from './Misc/Sidebar';
-import { getUserAuth } from '../action';
+import { getUserAuth, setActiveTab } from '../action';
 import RoommateFeed from './Roommates/RoommateFeed';
 
 function Roommates(props) {
+    useEffect(()=>{
+        props.setActiveTab('Roommates');
+    });
+
     return (
         <div className="Roommates">
             {(!props.user && !props.loggingIn) && <Redirect to="/" />}
@@ -24,6 +28,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getUserAuth: () => dispatch(getUserAuth()),
+    setActiveTab: (tab) => dispatch(setActiveTab(tab)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Roommates);

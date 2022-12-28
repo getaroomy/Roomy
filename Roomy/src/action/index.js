@@ -1,5 +1,6 @@
 import db, { auth, provider, storage } from '../firebase';
-import { SET_LOADING_STATUS, SET_USER, GET_ARTICLES, GET_SINGLE_ARTICLE ,GET_RENTALS, GET_ROOMMATES, SET_OTHER_USER } from './actionType';
+import { SET_LOADING_STATUS, SET_USER, SET_OTHER_USER, SET_ACTIVE_TAB,
+    GET_ARTICLES, GET_SINGLE_ARTICLE ,GET_RENTALS, GET_ROOMMATES } from './actionType';
 import 'firebase/firestore';
 
 /* eslint-disable no-undef */
@@ -60,6 +61,13 @@ export function setOtherUser(payload) {
     return {
         type: SET_OTHER_USER,
         otherUser: payload,
+    };
+}
+
+export function setTab(payload) {
+    return {
+        type: SET_ACTIVE_TAB,
+        activeTab: payload,
     };
 }
 
@@ -675,5 +683,11 @@ export function saveProperty(key, save) {
             console.log(error);
             alert('Problem saving the rental');
         }
+    };
+}
+
+export function setActiveTab(tab) {
+    return async (dispatch) => {
+        dispatch(setTab(tab));
     };
 }

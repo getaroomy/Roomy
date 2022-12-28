@@ -5,3 +5,4 @@ export const GET_SINGLE_ARTICLE = 'GET_SINGLE_ARTICLE';
 export const GET_RENTALS = 'GET_RENTALS';
 export const GET_ROOMMATES = 'GET_ROOMMATES';
 export const SET_OTHER_USER = 'SET_OTHER_USER';
+export const SET_ACTIVE_TAB = 'SET_ACTIVE_TAB';

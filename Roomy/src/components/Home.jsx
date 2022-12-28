@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import styled from 'styled-components';
+import { setActiveTab } from '../action';
 import Left from './Home/Left';
 import Main from './Home/Main';
 
@@ -29,6 +30,11 @@ const Layout = styled.div`
 `;
 
 function Home(props) {
+
+    useEffect(()=>{
+        props.setActiveTab('Home');
+    });
+
     return (
         <Container>
             {(!props.user && !props.loggingIn) && <Redirect to="/" />}
@@ -47,4 +53,8 @@ const mapStateToProps = (state) => ({
     loggingIn: state.userState.loggingIn,
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch) => ({
+    setActiveTab: (tab) => dispatch(setActiveTab(tab)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -4,6 +4,7 @@ import articleReducer from './articleReducer';
 import rentalReducer from './rentalReducer';
 import roommateReducer from './roommateReducer';
 import otherUserReducer from './otherUserReducer';
+import activeTabReducer from './activeTabReducer';
 
 const rootReducer = combineReducers({
     userState: userReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     rentalState: rentalReducer,
     roommateState: roommateReducer,
     otherUserState: otherUserReducer,
+    activeTabState: activeTabReducer,
 });
 
 export default rootReducer;

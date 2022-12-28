@@ -76,50 +76,54 @@ const LogoButton = styled.button`
     }
 `;
 
-function SideNav({ signout, uid }) {
+const ActiveSidebarTab = {
+    color: '#A943D3',
+};
+
+function SideNav({ signout, uid, activeTab }) {
     return (
         <Container>
             <StyledSideNav>
                 <a href="/feed">
                     <Button>
                         <img src="/images/house-door-fill.svg" alt="" />
-                        <span> Home</span>
+                        <span style={activeTab === 'Home' ? ActiveSidebarTab : null}> Home</span>
                     </Button>
                 </a>
                 <a href="/rentals">
                     <Button>
                         <img src="/images/building.svg" alt="" />
-                        <span> Rentals</span>
+                        <span style={activeTab === 'Rentals' ? ActiveSidebarTab : null}> Rentals</span>
                     </Button>
                 </a>
                 <a href="/roommates">
                     <Button>
                         <img src="/images/people-fill.svg" alt="" />
-                        <span> Roommates</span>
+                        <span style={activeTab === 'Roommates' ? ActiveSidebarTab : null}> Roommates</span>
                     </Button>
                 </a>
                 <a href="/feed">
                     <Button>
                         <img src="/images/clipboard2-check-fill.svg" alt="" />
-                        <span> Applications</span>
+                        <span style={activeTab === 'Applications' ? ActiveSidebarTab : null}> Applications</span>
                     </Button>
                 </a>
                 <a href="/feed">
                     <Button>
                         <img src="/images/chat-right-dots-fill.svg" alt="" />
-                        <span> Messages</span>
+                        <span style={activeTab === 'Messages' ? ActiveSidebarTab : null}> Messages</span>
                     </Button>
                 </a>
                 <a href="/saved">
                     <Button>
                         <img src="/images/bookmark-heart-fill.svg" alt="" />
-                        <span> Saved Properties</span>
+                        <span style={activeTab === 'Saved Properties' ? ActiveSidebarTab : null}> Saved Properties</span>
                     </Button>
                 </a>
                 <a href={uid ? `/profile/${uid}` : '/feed'} data-testid="profile">
                     <Button>
                         <img src="/images/person-circle.svg" alt="" />
-                        <span> Profile</span>
+                        <span style={activeTab === 'Profile' ? ActiveSidebarTab : null}> Profile</span>
                     </Button>
                 </a>
                 <LogoButton onClick={signout}>
@@ -133,7 +137,7 @@ function SideNav({ signout, uid }) {
 
 function Sidebar(props) {
     return (
-        <SideNav signout={props.signOut} uid={props.user ? props.user.uid : null}>
+        <SideNav signout={props.signOut} uid={props.user ? props.user.uid : null} activeTab={props.activeTab}>
             <StyledSideNav />
         </SideNav>
     );
@@ -141,6 +145,7 @@ function Sidebar(props) {
 
 const mapStateToProps = (state) => ({
     user: state.userState.user,
+    activeTab: state.activeTabState.activeTab,
 });
 
 const mapDispatchToProps = (dispatch) => ({
