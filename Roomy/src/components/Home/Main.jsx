@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { getArticlesAPI, updateArticleAPI } from '../../action';
 import { displayTime } from '../../action/commonFunctions';
 import PostalModal from './HomePostalModal';
-import InfiniteScroll from "react-infinite-scroll-component"
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Container = styled.div`
     grid-area: main;
@@ -312,12 +312,12 @@ function Main(props) {
                 }
                 <NoScroll>
                     <InfiniteScroll
-                    dataLength={props.articles.length}
-                    next={()=>props.getArticles()}
-                    hasMore={true}
-                    style={{height: 'auto', overflow: 'unset'}}
+                        dataLength={props.articles.length}
+                        next={()=>props.getArticles()}
+                        hasMore={true}
+                        style={{height: 'auto', overflow: 'unset'}}
                     >
-                    {props.articles.length > 0
+                        {props.articles.length > 0
                         && props.articles.map((article, key) => (
                             <Article key={key}>
                                 <SharedActor>

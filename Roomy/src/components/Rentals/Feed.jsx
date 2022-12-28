@@ -5,7 +5,7 @@ import { displayTime } from '../../action/commonFunctions';
 import RentalPostalModal from './RentalPostalModal';
 import ImageDisplay from '../Misc/ImageDisplay';
 import { connect } from 'react-redux';
-import {IconButton} from "@mui/material";
+import {IconButton} from '@mui/material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
@@ -221,7 +221,7 @@ const Body = styled.div`
 
 const NoLinkStyling = {
     textDecoration: 'none'
-}
+};
 
 function Feed(props) {
     const [showModal, setShowModal] = useState('close');
@@ -282,7 +282,7 @@ function Feed(props) {
     const getRentalsInDirection = (direction) => {
         const first = (props.ids && props.ids.length) ? props.ids[0] : '';
         const last = (props.ids && props.ids.length) ? props.ids[props.ids.length - 1] : '';
-        props.getRentals(first, last, direction)
+        props.getRentals(first, last, direction);
     };
 
     return (
@@ -337,12 +337,12 @@ function Feed(props) {
                              </RentalDetails>
                          </Rental>
                      ))}
-                     <IconButton aria-label="left-icon" size="large" onClick={()=>getRentalsInDirection('prev')}>
-                        <KeyboardArrowLeftIcon fontSize="inherit" />
-                    </IconButton>
-                    <IconButton aria-label="right-icon" size="large" onClick={()=>getRentalsInDirection('next')}>
-                        <KeyboardArrowRightIcon fontSize="inherit" />
-                    </IconButton>
+                <IconButton aria-label="left-icon" size="large" onClick={()=>getRentalsInDirection('prev')}>
+                    <KeyboardArrowLeftIcon fontSize="inherit" />
+                </IconButton>
+                <IconButton aria-label="right-icon" size="large" onClick={()=>getRentalsInDirection('next')}>
+                    <KeyboardArrowRightIcon fontSize="inherit" />
+                </IconButton>
             </Content>
         </Container>
     );
