@@ -43,6 +43,7 @@ const FeedWrapper = styled.div`
 
 function Rentals(props) {
     const [scrollKey, setScrollKey] = useState(0);
+    const [map, setMapElement] = useState();
 
     useEffect(() => {
         props.getRentals();
@@ -51,6 +52,10 @@ function Rentals(props) {
 
     function handleClickScroll(key) {
         setScrollKey(key);
+    }
+
+    function setGlobalMap(mapElement){
+        setMapElement(mapElement);
     }
 
     return (
@@ -68,7 +73,7 @@ function Rentals(props) {
                 </SidebarWrapper>
 
                 <MapWrapper>
-                    <Map rentals={props.rentals} handleClickScroll={handleClickScroll} />
+                    <Map rentals={props.rentals} handleClickScroll={handleClickScroll} onMapElementChange={setGlobalMap} />
                 </MapWrapper>
 
                 <FeedWrapper>
@@ -79,6 +84,7 @@ function Rentals(props) {
                         ids={props.ids}
                         scrollKey={scrollKey}
                         allowposting
+                        mapElement={map}
                     />
                 </FeedWrapper>
 
