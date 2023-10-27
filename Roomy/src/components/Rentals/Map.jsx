@@ -2,6 +2,8 @@ import React, {useState, useCallback} from 'react';
 import styled from 'styled-components';
 import {GoogleMap, Marker, InfoWindow} from '@react-google-maps/api';
 import SearchBar from './SearchBar';
+import { getRentalsAPI } from '../../action';
+import { connect } from 'react-redux';
 
 const containerStyle = {
     width: '100%',
@@ -26,7 +28,7 @@ function Map(props) {
     const [zoom, setZoom] = useState(14);
     const [infoOpen, setInfoOpen] = useState(false);
     const [mapObject, setMapObject] = useState(null);
-    const [city, setCity] = useState('Santa Cruz');
+    const [city, setCity] = useState('Santa Cruz, CA, USA');
     
     const markerOnLoadHandler = (rental, key) => {
         rental.setIcon('/images/rental-marker.png');
@@ -53,13 +55,16 @@ function Map(props) {
 
     const onMapLoad = (map) => {
         setMapObject(map);
+        props.onMapElementChange(map);
     };
 
     const onMapUnmount = useCallback(function callback(map) {
         setMapObject(null);
+        props.onMapElementChange(null);
     }, []);
 
     function panMapToCity(city) {
+        city = city.description;
         if(mapObject) {
             let service = new window.google.maps.places.PlacesService(mapObject);
             setCity(city);
@@ -74,13 +79,14 @@ function Map(props) {
                     mapObject.setCenter(results[0].geometry.location);
                 }
             });
+            props.getRentals(null,null,null,city);
         } else {
             console.log('Map not loaded in!');
         }
     }
     
     return <>
-        <SearchBar handleCityChange={panMapToCity} />
+        <SearchBar handleCityChange={panMapToCity} locationType='city' />
         <h1>{city}</h1>
         <GoogleMap
             mapContainerStyle={containerStyle}
@@ -112,4 +118,11 @@ function Map(props) {
     </>;
 }
 
-export default Map;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    getRentals: (first,last,direction,city) => dispatch(getRentalsAPI(first,last,direction,city)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

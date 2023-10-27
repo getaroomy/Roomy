@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Firebase from 'firebase';
 import { getUserAuth, postRental } from '../../action';
+import SearchBar from './SearchBar';
 
 const Container = styled.div`
     position: fixed;
@@ -181,6 +182,7 @@ function RentalPostalModal(props) {
     const [imageFiles, setImageFiles] = useState([]);
     const [videoFile, setVideoFile] = useState('');
     const [assetArea, setAssetArea] = useState('');
+    const [city, setCity] = useState('');
 
     const reset = (event) => {
         setBedrooms(1);
@@ -234,9 +236,38 @@ function RentalPostalModal(props) {
             coords,
             poster: props.user.uid,
             date: Firebase.firestore.Timestamp.now(),
+            city,
         };
         props.postRental(payload);
         reset(event);
+    }
+
+    function assignAddressInfo(address_info) {
+        const selectedAddress = address_info.description;
+        const selectedLocality = address_info.structured_formatting.secondary_text;
+        setAddress(selectedAddress);
+        setCity(selectedLocality);
+        console.log(address_info);
+        var lat = 0;
+        var lng = 0;
+        let service = new window.google.maps.places.PlacesService(props.mapElement);
+        const request = {
+            query: selectedAddress,
+            fields: ['id', 'location'],
+        };
+        service.textSearch(request, function(results, status) {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                const coords = results[0].geometry.location;
+                lat = coords.lat();
+                lng = coords.lng();
+                setCoords({
+                    latitude: lat,
+                    longitude: lng,
+                });
+            } else {
+                alert('Not able to find address\' location');
+            }
+        });
     }
 
     return (
@@ -266,7 +297,7 @@ function RentalPostalModal(props) {
                                 </RentalEntry>
                                 <RentalEntry>
                                     <h3>Address</h3>
-                                    <input value={address} onChange={(event) => setAddress(event.target.value)} placeholder="Where is it?" autoFocus />
+                                    <SearchBar locationType='address' handleCityChange={assignAddressInfo} />
                                 </RentalEntry>
                                 <RentalEntry>
                                     <h3>Title</h3>

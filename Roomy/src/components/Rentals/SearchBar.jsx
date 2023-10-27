@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
 
-const SearchBar = ({ handleCityChange }) => {
+const SearchBar = ({ handleCityChange, locationType }) => {
     const autocompleteService = { current: null };
 
     const [value, setValue] = React.useState(null);
@@ -28,7 +28,7 @@ const SearchBar = ({ handleCityChange }) => {
 
         if (!autocompleteService.current && window.google) {
             autocompleteService.current =
-        new window.google.maps.places.AutocompleteService();
+                new window.google.maps.places.AutocompleteService();
         }
         if (!autocompleteService.current) {
             return undefined;
@@ -64,7 +64,12 @@ const SearchBar = ({ handleCityChange }) => {
         let newOptions = [];
         options.forEach((element) => {
             // locality in google maps is only cities
-            if (element.types[0] === 'locality') newOptions.push(element);
+            if (locationType === 'city'){
+                if (element.types[0] === 'locality') newOptions.push(element);
+            }
+            else if (locationType === 'address'){
+                if (element.types[0] === 'premise' || element.types[0] === 'subpremise') newOptions.push(element);
+            }
         });
         return newOptions;
     };
@@ -101,7 +106,7 @@ const SearchBar = ({ handleCityChange }) => {
                     matches.map((match) => [match.offset, match.offset + match.length]),
                 );
                 return (
-                    <li {...props} onClick={()=>handleCityChange(option.description)}>
+                    <li {...props} onClick={()=>handleCityChange(option)}>
                         <Grid container alignItems="center">
                             <Grid item sx={{ display: 'flex', width: 44 }}>
                                 <LocationOnIcon sx={{ color: 'text.secondary' }} />
