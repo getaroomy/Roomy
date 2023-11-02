@@ -183,6 +183,7 @@ function RentalPostalModal(props) {
     const [videoFile, setVideoFile] = useState('');
     const [assetArea, setAssetArea] = useState('');
     const [city, setCity] = useState('');
+    const googleMapsToken = process.env.REACT_APP_GOOGLE_MAPS_TOKEN;
 
     const reset = (event) => {
         setBedrooms(1);
@@ -242,32 +243,32 @@ function RentalPostalModal(props) {
         reset(event);
     }
 
-    function assignAddressInfo(address_info) {
+    async function assignAddressInfo(address_info) {
         const selectedAddress = address_info.description;
-        const selectedLocality = address_info.structured_formatting.secondary_text;
-        setAddress(selectedAddress);
-        setCity(selectedLocality);
-        console.log(address_info);
-        var lat = 0;
-        var lng = 0;
-        let service = new window.google.maps.places.PlacesService(props.mapElement);
-        const request = {
-            query: selectedAddress,
-            fields: ['id', 'location'],
+        const headers = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                address: {
+                    addressLines: [selectedAddress]
+                }
+            })
         };
-        service.textSearch(request, function(results, status) {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                const coords = results[0].geometry.location;
-                lat = coords.lat();
-                lng = coords.lng();
-                setCoords({
-                    latitude: lat,
-                    longitude: lng,
-                });
-            } else {
-                alert('Not able to find address\' location');
-            }
-        });
+        const addressValidationUrl = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${googleMapsToken}`;
+        const addrFetch = await fetch(addressValidationUrl, headers);
+        const addrFetchResp = await addrFetch.json();
+
+        const postalAddress = addrFetchResp.result.address.postalAddress;
+        const coordsObject = addrFetchResp.result.geocode.location;
+        const formattedAddress = addrFetchResp.result.address.formattedAddress;
+        const formattedCity = `${postalAddress.locality}, ${postalAddress.administrativeArea}, ${postalAddress.regionCode}`;
+        
+        setCity(formattedCity);
+        setAddress(formattedAddress);
+        setCoords(coordsObject);
     }
 
     return (

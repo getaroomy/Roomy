@@ -29,6 +29,7 @@ function Map(props) {
     const [infoOpen, setInfoOpen] = useState(false);
     const [mapObject, setMapObject] = useState(null);
     const [city, setCity] = useState('Santa Cruz, CA, USA');
+    const googleMapsToken = process.env.REACT_APP_GOOGLE_MAPS_TOKEN;
     
     const markerOnLoadHandler = (rental, key) => {
         rental.setIcon('/images/rental-marker.png');
@@ -63,23 +64,32 @@ function Map(props) {
         props.onMapElementChange(null);
     }, []);
 
-    function panMapToCity(city) {
-        city = city.description;
+    async function panMapToCity(city) {
         if(mapObject) {
-            let service = new window.google.maps.places.PlacesService(mapObject);
-            setCity(city);
-            const request = {
-                query: city,
-                fields: ['id', 'location'],
-                includedType: 'locality',
-                locationBias: center,
+            city = city.description;
+            const headers = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: {
+                        addressLines: [city]
+                    }
+                })
             };
-            service.textSearch(request, function(results, status) {
-                if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                    mapObject.setCenter(results[0].geometry.location);
-                }
-            });
-            props.getRentals(null,null,null,city);
+            const addressValidationUrl = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${googleMapsToken}`;
+            const addrFetch = await fetch(addressValidationUrl, headers);
+            const addrFetchResp = await addrFetch.json();
+
+            const postalAddress = addrFetchResp.result.address.postalAddress;
+            const coordsObject = addrFetchResp.result.geocode.location;
+            const formattedCity = `${postalAddress.locality}, ${postalAddress.administrativeArea}, ${postalAddress.regionCode}`;
+
+            mapObject.setCenter({lat: coordsObject.latitude, lng: coordsObject.longitude});
+            setCity(formattedCity);
+            props.getRentals(null,null,null,formattedCity);
         } else {
             console.log('Map not loaded in!');
         }

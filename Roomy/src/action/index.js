@@ -384,7 +384,7 @@ export function updateArticleAPI(payload, onSinglePostPage) {
     };
 }
 
-export function getRentalsAPI(first='',last='',direction='next',city='Santa Cruz, CA, USA') {
+export function getRentalsAPI(first='',last='',direction='next',city='Santa Cruz, CA, US') {
     return async (dispatch) => {
         dispatch(setLoading(true));
         try {
