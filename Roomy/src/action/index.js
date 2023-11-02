@@ -384,7 +384,7 @@ export function updateArticleAPI(payload, onSinglePostPage) {
     };
 }
 
-export function getRentalsAPI(first='',last='',direction='next') {
+export function getRentalsAPI(first='',last='',direction='next',city='Santa Cruz, CA, US') {
     return async (dispatch) => {
         dispatch(setLoading(true));
         try {
@@ -396,6 +396,7 @@ export function getRentalsAPI(first='',last='',direction='next') {
             }
             const data = new FormData();
             data.append('last_post', direction === 'next' ? last : prevHead);
+            data.append('city', city);
             const response = await fetch(`${serverURL}/get_rentals`, {
                 mode: 'cors',
                 method: 'POST',
@@ -504,16 +505,8 @@ export function postRental(payload) {
         for (const img of payload.photos) {
             photos.push(uploadImage(img));
         }
-        let [lat, long] = [0, 0];
         Promise.all(photos).then(async (urls) => {
             photos = urls;
-            const { address } = payload;
-            await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${geoCodeToken}`)
-                .then((resp) => resp.json())
-                .then((data) => {
-                    lat = data.features[0].center[1];
-                    long = data.features[0].center[0];
-                });
             try {
                 const response = await fetch(`${serverURL}/post_rental`, {
                     mode: 'cors',
@@ -532,12 +525,10 @@ export function postRental(payload) {
                         preferences: payload.preferences,
                         photos,
                         address: payload.address,
-                        coords: {
-                            latitude: lat,
-                            longitude: long,
-                        },
+                        coords: payload.coords,
                         poster: payload.poster,
                         date: payload.date,
+                        city: payload.city,
                     })}
                 );
                 const results = await response.json();

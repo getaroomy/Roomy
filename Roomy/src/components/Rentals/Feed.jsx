@@ -297,7 +297,7 @@ function Feed(props) {
                     </div>
                 )}
             </CreateRental>
-            <RentalPostalModal showModal={showModal} clickHandler={clickHandler} />
+            <RentalPostalModal showModal={showModal} clickHandler={clickHandler} mapElement={props.mapElement} />
             <Content>
                 {props.loading && <img src="/images/spin-loader.gif" alt="" />}
                 {props.rentals && props.rentals.length > 0

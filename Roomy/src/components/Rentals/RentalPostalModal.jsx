@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Firebase from 'firebase';
 import { getUserAuth, postRental } from '../../action';
+import SearchBar from './SearchBar';
 
 const Container = styled.div`
     position: fixed;
@@ -181,6 +182,8 @@ function RentalPostalModal(props) {
     const [imageFiles, setImageFiles] = useState([]);
     const [videoFile, setVideoFile] = useState('');
     const [assetArea, setAssetArea] = useState('');
+    const [city, setCity] = useState('');
+    const googleMapsToken = process.env.REACT_APP_GOOGLE_MAPS_TOKEN;
 
     const reset = (event) => {
         setBedrooms(1);
@@ -234,9 +237,38 @@ function RentalPostalModal(props) {
             coords,
             poster: props.user.uid,
             date: Firebase.firestore.Timestamp.now(),
+            city,
         };
         props.postRental(payload);
         reset(event);
+    }
+
+    async function assignAddressInfo(address_info) {
+        const selectedAddress = address_info.description;
+        const headers = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                address: {
+                    addressLines: [selectedAddress]
+                }
+            })
+        };
+        const addressValidationUrl = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${googleMapsToken}`;
+        const addrFetch = await fetch(addressValidationUrl, headers);
+        const addrFetchResp = await addrFetch.json();
+
+        const postalAddress = addrFetchResp.result.address.postalAddress;
+        const coordsObject = addrFetchResp.result.geocode.location;
+        const formattedAddress = addrFetchResp.result.address.formattedAddress;
+        const formattedCity = `${postalAddress.locality}, ${postalAddress.administrativeArea}, ${postalAddress.regionCode}`;
+        
+        setCity(formattedCity);
+        setAddress(formattedAddress);
+        setCoords(coordsObject);
     }
 
     return (
@@ -266,7 +298,7 @@ function RentalPostalModal(props) {
                                 </RentalEntry>
                                 <RentalEntry>
                                     <h3>Address</h3>
-                                    <input value={address} onChange={(event) => setAddress(event.target.value)} placeholder="Where is it?" autoFocus />
+                                    <SearchBar locationType='address' handleCityChange={assignAddressInfo} />
                                 </RentalEntry>
                                 <RentalEntry>
                                     <h3>Title</h3>
