@@ -94,6 +94,7 @@ const SearchBar = ({ handleCityChange, locationType }) => {
             }}
             onInputChange={(_, newInputValue) => {
                 setInputValue(newInputValue);
+                setValue(newInputValue);
             }}
             renderInput={(params) => (
                 <TextField {...params} label="Search a city" fullWidth  />

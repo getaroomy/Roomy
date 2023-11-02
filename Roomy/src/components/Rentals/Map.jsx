@@ -97,7 +97,6 @@ function Map(props) {
     
     return <>
         <SearchBar handleCityChange={panMapToCity} locationType='city' />
-        <h1>{city}</h1>
         <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
