@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Redirect } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 import { RemoveScrollBar } from 'react-remove-scroll-bar';
 import { getUserAuth, getRentalsAPI, setActiveTab } from '../action';
 import Header from './Misc/Header';
@@ -44,9 +44,17 @@ const FeedWrapper = styled.div`
 function Rentals(props) {
     const [scrollKey, setScrollKey] = useState(0);
     const [map, setMapElement] = useState();
-
+    const urlParams = useParams();
+    let city = 'Santa Cruz, CA, US';
+    let first = '';
+    if (urlParams.city){
+        city = urlParams.city;
+    }
+    if (urlParams.first){
+        first = urlParams.first;
+    }
     useEffect(() => {
-        props.getRentals();
+        props.getRentals(first,'','next',city);
         props.setActiveTab('Rentals');
     }, []);
 
@@ -85,6 +93,7 @@ function Rentals(props) {
                         scrollKey={scrollKey}
                         allowposting
                         mapElement={map}
+                        urlParams={urlParams}
                     />
                 </FeedWrapper>
 
@@ -103,7 +112,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getUserAuth: () => dispatch(getUserAuth()),
-    getRentals: () => dispatch(getRentalsAPI()),
+    getRentals: (first, last, direction, city) => dispatch(getRentalsAPI(first, last, direction, city)),
     setActiveTab: (tab) => dispatch(setActiveTab(tab)),
 });
 

@@ -28,7 +28,7 @@ function Map(props) {
     const [zoom, setZoom] = useState(14);
     const [infoOpen, setInfoOpen] = useState(false);
     const [mapObject, setMapObject] = useState(null);
-    const [city, setCity] = useState('Santa Cruz, CA, USA');
+    const [city, setCity] = useState('Santa Cruz, CA, US');
     const googleMapsToken = process.env.REACT_APP_GOOGLE_MAPS_TOKEN;
     
     const markerOnLoadHandler = (rental, key) => {

@@ -33,7 +33,7 @@ function App(props) {
                     </Route>
                     <Route path="/post/:id" component={Post} />
                     <Route path="/profile/:id" component={Profile} />
-                    <Route path="/rentals" component={Rentals} />
+                    <Route path="/rentals/:city?/:first?" component={Rentals} />
                     <Route path="/roommates" component={Roommates} />
                     <Route path="/saved" component={SavedProperties} />
                 </Switch>

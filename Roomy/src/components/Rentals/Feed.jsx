@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import {IconButton} from '@mui/material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
     flex-direction: column;
@@ -229,6 +230,12 @@ function Feed(props) {
     const user = props ? props.user : null;
     const userInfo = user ? user.userInfo : null;
     const photoUrl = user ? user.photoURL : '/images/photo.svg';
+    const history = useHistory();
+    let last = (props.ids && props.ids.length) ? props.ids[props.ids.length - 1] : '';
+    let city = 'Santa Cruz, CA, US';
+    if (props.urlParams.city){
+        city = props.urlParams.city;
+    }
 
     useEffect(()=>{
         if(props.user && props.user.userInfo){
@@ -280,9 +287,15 @@ function Feed(props) {
     };
 
     const getRentalsInDirection = (direction) => {
-        const first = (props.ids && props.ids.length) ? props.ids[0] : '';
-        const last = (props.ids && props.ids.length) ? props.ids[props.ids.length - 1] : '';
-        props.getRentals(first, last, direction);
+        if (direction==='prev'){
+            window.history.back();
+            setTimeout(function() { // URL doesn't refresh for some reason (come back)
+                location.reload();
+            }, 5);
+        } else {
+            history.push(`/rentals/${city}/${last}`);
+            props.getRentals(last, '', direction, props.urlParams.city);
+        }
     };
 
     return (
@@ -350,7 +363,7 @@ function Feed(props) {
 
 const mapDispatchToProps = (dispatch) => ({
     saveProperty: (id, save) => dispatch(saveProperty(id, save)),
-    getRentals: (first=null,last=null,direction='next') => dispatch(getRentalsAPI(first, last, direction))
+    getRentals: (first='',last='',direction='next',city) => dispatch(getRentalsAPI(first, last, direction, city))
 });
 
 export default connect(null, mapDispatchToProps)(Feed);
