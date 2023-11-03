@@ -2,7 +2,8 @@
 module.exports = {
     'env': {
         'browser': true,
-        'es2021': true
+        'es2021': true,
+        'node': true
     },
     'settings': {
         'react': {
@@ -10,10 +11,10 @@ module.exports = {
         },
         'import/resolver': {
             'node': {
-              'paths': ['src'],
-              'extensions': ['.js', '.jsx', '.css']
+                'paths': ['src'],
+                'extensions': ['.js', '.jsx', '.css']
             }
-          }
+        }
     },
     'extends': [
         'eslint:recommended',
