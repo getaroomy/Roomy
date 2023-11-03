@@ -388,14 +388,8 @@ export function getRentalsAPI(first='',last='',direction='next',city='Santa Cruz
     return async (dispatch) => {
         dispatch(setLoading(true));
         try {
-            let prevHead = ''; // Previous 1'st rental post of last visited page
-            if(direction === 'next'){
-                if(first.length) rental_starts.push(first);
-            } else {
-                if (rental_starts.length) prevHead = rental_starts.pop();
-            }
             const data = new FormData();
-            data.append('last_post', direction === 'next' ? last : prevHead);
+            data.append('last_post', first);
             data.append('city', city);
             const response = await fetch(`${serverURL}/get_rentals`, {
                 mode: 'cors',
