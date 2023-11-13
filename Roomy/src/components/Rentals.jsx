@@ -45,16 +45,17 @@ function Rentals(props) {
     const [scrollKey, setScrollKey] = useState(0);
     const [map, setMapElement] = useState();
     const urlParams = useParams();
-    let city = 'Santa Cruz, CA, US';
-    let first = '';
+    const googleMapsToken = process.env.REACT_APP_GOOGLE_MAPS_TOKEN;
+    const [city, setCity] = useState('Santa Cruz, CA, US');
+    const [firstPost, setFirstPost] = useState('');
     if (urlParams.city){
-        city = urlParams.city;
+        setCity(urlParams.city);
     }
     if (urlParams.first){
-        first = urlParams.first;
+        setFirstPost(urlParams.first);
     }
     useEffect(() => {
-        props.getRentals(first,'','next',city);
+        props.getRentals(firstPost,'','next',city);
         props.setActiveTab('Rentals');
     }, []);
 
@@ -64,6 +65,33 @@ function Rentals(props) {
 
     function setGlobalMap(mapElement){
         setMapElement(mapElement);
+    }
+
+    async function panMapToCity(city) {
+        if(map) {
+            if (typeof city === 'object') {
+                city = city.description;
+            }
+            const headers = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: {
+                        addressLines: [city]
+                    }
+                })
+            };
+            const addressValidationUrl = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${googleMapsToken}`;
+            const addrFetch = await fetch(addressValidationUrl, headers);
+            const addrFetchResp = await addrFetch.json();
+            const coordsObject = addrFetchResp.result.geocode.location;
+            map.setCenter({lat: coordsObject.latitude, lng: coordsObject.longitude});
+        } else {
+            console.log('Map not loaded in!');
+        }
     }
 
     return (
@@ -81,7 +109,12 @@ function Rentals(props) {
                 </SidebarWrapper>
 
                 <MapWrapper>
-                    <Map rentals={props.rentals} handleClickScroll={handleClickScroll} onMapElementChange={setGlobalMap} />
+                    <Map
+                        rentals={props.rentals}
+                        handleClickScroll={handleClickScroll}
+                        onMapElementChange={setGlobalMap}
+                        panMapToCity={panMapToCity}
+                    />
                 </MapWrapper>
 
                 <FeedWrapper>

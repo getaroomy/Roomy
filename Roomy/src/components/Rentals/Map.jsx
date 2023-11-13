@@ -29,7 +29,6 @@ function Map(props) {
     const [infoOpen, setInfoOpen] = useState(false);
     const [mapObject, setMapObject] = useState(null);
     const [city, setCity] = useState('Santa Cruz, CA, US');
-    const googleMapsToken = process.env.REACT_APP_GOOGLE_MAPS_TOKEN;
     
     const markerOnLoadHandler = (rental, key) => {
         rental.setIcon('/images/rental-marker.png');
@@ -64,39 +63,12 @@ function Map(props) {
         props.onMapElementChange(null);
     }, []);
 
-    async function panMapToCity(city) {
-        if(mapObject) {
-            city = city.description;
-            const headers = {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    address: {
-                        addressLines: [city]
-                    }
-                })
-            };
-            const addressValidationUrl = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${googleMapsToken}`;
-            const addrFetch = await fetch(addressValidationUrl, headers);
-            const addrFetchResp = await addrFetch.json();
-
-            const postalAddress = addrFetchResp.result.address.postalAddress;
-            const coordsObject = addrFetchResp.result.geocode.location;
-            const formattedCity = `${postalAddress.locality}, ${postalAddress.administrativeArea}, ${postalAddress.regionCode}`;
-
-            mapObject.setCenter({lat: coordsObject.latitude, lng: coordsObject.longitude});
-            setCity(formattedCity);
-            props.getRentals(null,null,null,formattedCity);
-        } else {
-            console.log('Map not loaded in!');
-        }
-    }
+    const handleCityChange = (newCity) => {
+        props.panMapToCity(newCity);
+    };
     
     return <>
-        <SearchBar handleCityChange={panMapToCity} locationType='city' />
+        <SearchBar handleCityChange={handleCityChange} locationType='city' />
         <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
