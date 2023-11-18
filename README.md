@@ -1,37 +1,36 @@
-![Roomy](./Roomy/public/images/roomylogofull.svg)
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-# Where LinkedIn meets Zillow
-If you're in the housing market, whether as a future tenant or a future landlord, you can put a face and story to your rental applications.
+## Getting Started
 
+First, run the development server:
 
-## Current Features
-- View and post a rental property    
-- Customize your profile to your preferences
-- View other people looking for roommates & advertise yourself
-- Make general posts on the homepage
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-# Get Started
-## Start Local Site
-- Clone the repo, and open your terminal wherever you cloned to.
-- Run the following commands in your terminal:
-  - ```properties
-    cd ./Roomy/roomy
-    npm i
-    npm run start
-    ```
-- Development site should be hosted on http://localhost:3000/
-## Troubleshooting
-- If npm run start does not work then please try:
-  - ```properties
-    export NODE_OPTIONS=--openssl-legacy-provider
-- If having errors with eslint then please try:
-  - Deleting .eslintrc.js file in the root directory and trying again
-## Unit Testing
-- Clone the repo, and open your terminal wherever you cloned to.
-- Run the following commands in your terminal:
-  - ```properties
-    cd ./Roomy
-    npm i
-    npm run test
-    ```
-  - If you're on a mac device, tests may not work without typing `npm install fsevents`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
