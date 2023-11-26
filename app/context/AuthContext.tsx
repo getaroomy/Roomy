@@ -43,7 +43,7 @@ const createUserMetadata = async (userCred: UserCredential, fullName: string, ge
         method: 'POST',
         body: JSON.stringify({
             looking: true,
-            displayName:fullName,
+            displayName: fullName,
             status: 'Renter',
             uid,
             photoURL:'',

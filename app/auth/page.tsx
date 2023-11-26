@@ -6,7 +6,7 @@ import { UserAuth } from "../context/AuthContext"
 import { useRouter } from "next/navigation";
 
 export default function Auth() {
-  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(true);
   const {user, loading} = UserAuth();
   const router = useRouter();
   

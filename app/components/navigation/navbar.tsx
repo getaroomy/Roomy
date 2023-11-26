@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Image from "next/image";
+import ProfileDefaultLogo from "@/public/profile-default.svg";
 
 export const Navbar = (
   { toggle, logOut }:
@@ -49,7 +50,7 @@ export const Navbar = (
             <p className="hover:text-violet-400">Rentals</p>
           </Link>
           <div className="relative text-left hidden md:block">
-            <Image onBlur={()=>showProfileDropdown(!profileDropdown)} onClick={() => showProfileDropdown(!profileDropdown)} height={64} width={64} className="text-white hover:text-violet-400" src="./profile-default.svg" alt="Profile Picture"/>
+            <Image onBlur={()=>showProfileDropdown(!profileDropdown)} onClick={() => showProfileDropdown(!profileDropdown)} height={64} width={64} className="text-white hover:text-violet-400" src={ProfileDefaultLogo} alt="Profile Picture"/>
             {profileDropdown ? <DropdownComponent /> : null }
           </div>
         </div>
