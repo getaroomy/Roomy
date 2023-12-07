@@ -1,14 +1,9 @@
 import Link from "next/link";
 
-export const Sidebar = ({
-  isOpen,
-  toggle,
-  logOut
-}: {
-  isOpen: boolean;
-  toggle: () => void;
-  logOut: () => void;
-}): JSX.Element => {
+export const Sidebar = (
+  { isOpen, toggle, logOut, uid }:
+  { isOpen: boolean, toggle: () => void, logOut: () => void, uid: string | undefined }
+): JSX.Element => {
   const signOutUser = () => {
     toggle();
     logOut();
@@ -50,7 +45,7 @@ export const Sidebar = ({
             </Link>
           </li>
           <li>
-            <Link href="/profile" onClick={toggle}>
+            <Link href={`/profile/${uid}`} onClick={toggle}>
               <p>Profile</p>
             </Link>
           </li>

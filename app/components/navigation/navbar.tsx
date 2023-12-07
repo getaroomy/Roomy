@@ -5,8 +5,9 @@ import Image from "next/image";
 import ProfileDefaultLogo from "@/public/profile-default.svg";
 
 export const Navbar = (
-  { toggle, logOut }:
-  { toggle: () => void, logOut: () => void }) => {
+  { toggle, logOut, uid }:
+  { toggle: () => void, logOut: () => void, uid: string | undefined }
+) => {
   const [profileDropdown, showProfileDropdown] = useState<boolean>(false);
 
   const signOutUser = () => {
@@ -18,7 +19,7 @@ export const Navbar = (
     return (
       <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
         <div className="py-1" onClick={()=>showProfileDropdown(!profileDropdown)}>
-          <Link href="/profile" className="text-gray-700 block px-4 py-2 text-md">My Profile</Link>
+          <Link href={`/profile/${uid}`} className="text-gray-700 block px-4 py-2 text-md">My Profile</Link>
         </div>
         <div className="py-1" onClick={signOutUser}>
           <div className="text-gray-700 block px-4 py-2 text-md">Sign Out</div>

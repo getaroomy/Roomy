@@ -18,8 +18,8 @@ const Navigation = () => {
   };
   return (
     showNavigation && <> 
-      <Sidebar isOpen={isOpen} toggle={toggle} logOut={logOut} />
-      <Navbar toggle={toggle} logOut={logOut} />
+      <Sidebar isOpen={isOpen} toggle={toggle} logOut={logOut} uid={user?.uid} />
+      <Navbar toggle={toggle} logOut={logOut} uid={user?.uid} />
     </>
   );
 };
