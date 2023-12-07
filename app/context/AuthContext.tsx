@@ -33,7 +33,6 @@ const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 const createUserMetadata = async (userCred: UserCredential, fullName: string, gender: string) => {
     const uid = userCred.user.uid;
     const jwt = await userCred.user.getIdToken();
-    console.log(userCred);
     const res = await fetch(`${serverURL}/set_user_info`, {
         headers: {
             'Authorization': `Bearer ${jwt}`,
@@ -42,20 +41,23 @@ const createUserMetadata = async (userCred: UserCredential, fullName: string, ge
         mode: 'cors',
         method: 'POST',
         body: JSON.stringify({
-            looking: true,
-            displayName: fullName,
-            status: 'Renter',
             uid,
-            photoURL:'',
-            experiences: [],
-            preferences: {
-                roomWith: '',
-                pets: '',
-                smoking: '',
-            },
-            phoneNumber: '',
-            gender: gender,
             bio: '',
+            displayName: fullName,
+            photoURL:'',
+            phoneNumber: '',
+            showPhoneNumber: false,
+            gender: gender,
+            experiences: [],
+            looking: true,
+            preferences: {
+                roomWithGender: '',
+                doIHavePetsdoIHavePets: false,
+                fineWithHavingPets: false,
+                doISmoke: false,
+                fineWithSmokers: false,
+            },
+            status: 'Renter',
         })
     });
 }
@@ -83,7 +85,6 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
     const emailSignIn = async (email:string, password:string) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            console.log("Signed in through email");
         } catch (err) {
             console.log("Error logging in through email:", err);
         }
@@ -105,7 +106,6 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
 
     const logOut = () => {
         signOut(auth);
-        console.log("Signed out");
         setLoading(false);
     }
 
