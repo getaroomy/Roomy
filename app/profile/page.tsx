@@ -1,8 +1,18 @@
+"use client";
+import { useRouter } from "next/navigation";
+import { UserAuth } from "@/app/context/AuthContext";
+import { useEffect } from "react";
+
 export default function Profile() {
-	
+	const router = useRouter();
+	const {user, loading} = UserAuth();
+	useEffect(()=>{
+		if (!user && !loading) router.push("/auth");
+		if (user){
+			router.push(`/profile/${user.uid}`);
+		}
+	},[loading, router, user]);
 	return (
-		<main className="flex min-h-screen flex-col py-8 px-16">
-			<h1>Profile Page</h1>
-		</main>
+		<></>
 	)
 }
