@@ -6,7 +6,7 @@ export type UserProfileDetails = {
     phoneNumber?: string,
     showPhoneNumber: boolean
     gender: string,
-    experiences?: Array<any>,
+    experiences?: Array<ProfileExperience>,
     looking: boolean,
     email?: string,
     preferences?: {
@@ -17,4 +17,12 @@ export type UserProfileDetails = {
         fineWithSmokers?: boolean
     },
     status?: string,
+}
+
+export type ProfileExperience = {
+    uid: string,
+    displayName: string,
+    experience: string,
+    photoURL?: string,
+    date?: string
 }
