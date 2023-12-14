@@ -9,8 +9,10 @@ export default function LayoutComponent({
 }) {
   return (
     <AuthContextProvider>
+      <div className="min-h-screen">
         <Navigation />
         {children}
+      </div>
     </AuthContextProvider>
   )
 }

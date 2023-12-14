@@ -8,6 +8,7 @@ export type UserProfileDetails = {
     gender: string,
     experiences?: Array<any>,
     looking: boolean,
+    email?: string,
     preferences?: {
         roomWithGender?: string,
         doIHavePets?: boolean,
