@@ -7,7 +7,7 @@ export const getUserDetails = async (user: User | null): Promise<UserProfileDeta
     if(user === null) return null;
     const jwt = await user.getIdToken();
     const uid = user.uid;
-    const result = await fetch(`${serverURL}/get_other_user?uid=${uid}`, {
+    const result = await fetch(`${serverURL}/get_my_profile?uid=${uid}`, {
         headers: {
             'Authorization': `Bearer ${jwt}`,
             'Content-Type': 'application/json',
@@ -23,6 +23,26 @@ export const getUserDetails = async (user: User | null): Promise<UserProfileDeta
     });
     return result;
 };
+
+export const getOtherUser = async (user: User | null, reqUID: string) => {
+    if (user === null) return null;
+    const jwt = await user.getIdToken();
+    const result = await fetch(`${serverURL}/get_other_user_profile?uid=${reqUID}`, {
+        headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors'
+    })
+    .then((res)=>res.json())
+    .then((val)=>{
+        return val;
+    })
+    .catch((err)=>{
+        return null;
+    });
+    return result;
+}
 
 export const updateProfilePicture = (user: User, file: Blob) => {
     const storage = getStorage();
