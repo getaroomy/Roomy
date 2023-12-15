@@ -9,7 +9,7 @@ export default function Profile() {
 	useEffect(()=>{
 		if (!user && !loading) router.push("/auth");
 		if (user){
-			router.push(`/profile/${user.uid}`);
+			router.replace(`/profile/${user.uid}`);
 		}
 	},[loading, router, user]);
 	return (
