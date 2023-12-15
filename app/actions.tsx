@@ -1,7 +1,9 @@
 import { User } from "firebase/auth";
-import { UserProfileDetails } from "./lib/exports";
+import { RoommatePreviewDetails, UserProfileDetails } from "./lib/exports";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
+
+// --- User Profile Actions ---
 
 export const getUserDetails = async (user: User | null): Promise<UserProfileDetails | null> => {
     if(user === null) return null;
@@ -85,4 +87,17 @@ export const updateUserDetails = async (user: User, UserDetails: UserProfileDeta
     } else {
         console.log("You're trying to edit someone else's account");
     }
+}
+
+// --- Roommates Actions ---
+
+export const getAvailableRoommates = async (user: User, page?: string | null): Promise<Array<RoommatePreviewDetails> | null> => {
+    if (user === null) return null;
+    return [{
+        uid: "",
+        displayName: "",
+        bio: "",
+        photoURL: "",
+        city: ""
+    }]
 }

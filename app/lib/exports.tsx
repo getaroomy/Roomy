@@ -26,3 +26,11 @@ export type ProfileExperience = {
     photoURL?: string,
     date?: string
 }
+
+export type RoommatePreviewDetails = {
+    uid: string,
+    displayName: string,
+    bio: string,
+    photoURL?: string,
+    city: string
+}
