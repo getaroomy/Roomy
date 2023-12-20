@@ -36,7 +36,7 @@ export default function Page({ params }: { params: { uid: string } }) {
 				<div className="md:columns-6 sm:columns-1">
 					<Image id="profilePicture" src={currentUser?.photoURL || UserProfileLogo} alt="Profile picture" height={128} width={128} className="rounded-full"/>
 					{currentUser?.uid === user?.uid &&
-						<Link href={`/profile/${user?.uid}/edit`} className="bg-purple-200 rounded-md m-4 px-8 py-4 text-center inline-flex items-center hover:bg-black">Edit Profile</Link>
+						<Link href={`/profile/${user?.uid}/edit`} className="bg-purple-200 rounded-md m-4 px-8 py-4 text-center inline-flex items-center hover:bg-purple-400">Edit Profile</Link>
 					}
 				</div>
 				<h1 id="displayName" className="mt-2 text-2xl font-bold">{currentUser?.displayName  || "Display Name"}</h1>
