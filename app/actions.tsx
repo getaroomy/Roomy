@@ -91,13 +91,25 @@ export const updateUserDetails = async (user: User, UserDetails: UserProfileDeta
 
 // --- Roommates Actions ---
 
-export const getAvailableRoommates = async (user: User, page?: string | null): Promise<Array<RoommatePreviewDetails> | null> => {
+export const getAvailableRoommates = async (user: User, page?: string | null, params?: string | null): Promise<Array<RoommatePreviewDetails> | null> => {
     if (user === null) return null;
-    return [{
-        uid: "",
-        displayName: "",
-        bio: "",
-        photoURL: "",
-        city: ""
-    }]
+    const jwt = await user.getIdToken();
+    const uid = user.uid;
+    let urlParams = ``; // Params
+    const result = await fetch(`${serverURL}/get_roommates?uid=${uid}${urlParams}`, {
+        headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors'
+    })
+    .then((res)=>res.json())
+    .then((val)=>{
+        return val.roommates;
+    })
+    .catch((err)=>{
+        console.error(err);
+        return null;
+    });
+    return result;
 }
