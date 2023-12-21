@@ -45,7 +45,7 @@ export default function Page({ params }: { params: { uid: string } }) {
 					<div id="phone" className="flex">
 						<PhoneIcon height={24} width={24} className="text-purple-500" />
 						<p className="font-bold">
-							Phone Number:
+							Phone Number:&nbsp;
 						</p>
 						{ currentUser?.showPhoneNumber ?
 							<a href={`tel:${currentUser?.phoneNumber}`}>{currentUser?.phoneNumber}</a>
