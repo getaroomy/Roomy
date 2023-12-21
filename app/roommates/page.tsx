@@ -5,7 +5,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {UserAuth} from "@/app/context/AuthContext";
 import { getAvailableRoommates } from "@/app/actions";
+import Spinner from "@/public/spinner.svg";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Roommates() {
   const searchParams = useSearchParams();
@@ -42,7 +44,9 @@ export default function Roommates() {
                 photoURL={person.photoURL}
                 city={person.city} />
           );
-        }) : !loadingRoommates &&
+        }) : loadingRoommates ?
+          <Image src={Spinner} alt={"loading spinner"} />
+        :
         <div className="text-center">
             <h1>No Roomies found :( </h1>
             <h2>Check if your <Link className="text-purple-600" href={`/profile/${user?.uid}/edit`}>profile</Link> is updated</h2>

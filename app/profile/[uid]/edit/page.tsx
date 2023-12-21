@@ -3,7 +3,6 @@ import { UserAuth } from "@/app/context/AuthContext"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Head from "next/head";
 import { getUserDetails, updateUserDetails, updateProfilePicture } from "@/app/actions";
 import { UserProfileDetails } from "@/app/lib/exports";
 import UserProfileLogo from "@/public/user-profile-logo.svg";

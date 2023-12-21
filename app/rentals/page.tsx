@@ -1,7 +1,7 @@
 export default function Rentals() {
   return (
-    <main className="flex min-h-screen flex-col py-8 px-16">
-      <h1>Rentals Page</h1>
+    <main className="flex justify-center h-screen items-center py-8 px-16">
+      <h1 className="font-extrabold text-4xl italic">Coming Soon</h1>
     </main>
   )
 }

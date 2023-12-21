@@ -19,7 +19,7 @@ export default function RoommateCard(
           </span>
           <div className="space-y-1">
             <h2 className="text-lg font-semibold">{displayName}</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Software Engineer</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400"></p> {/* */}
           </div>
         </div>
       </div>
