@@ -8,6 +8,7 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     env:
+      FIREBASE_CLI_EXPERIMENTS: webframeworks
       NEXT_PUBLIC_SERVER_URL: '${{ secrets.NEXT_PUBLIC_SERVER_URL }}'
       NEXT_PUBLIC_FIREBASE_API_KEY: '${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}'
       NEXT_PUBLIC_AUTH_DOMAIN: '${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN }}'
