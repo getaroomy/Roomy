@@ -13,7 +13,6 @@
     "cleanUrls":true,
     "rewrites": [
       {
-        "source": "/**", 
         "dynamicLinks": true
       }
     ]
