@@ -8,7 +8,7 @@
     "frameworksBackend": {
       "region": "us-central1"
     },
-    "public": ".next",
+    "public": ".",
     "rewrites": [
       {
         "source": "**",
