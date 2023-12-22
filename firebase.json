@@ -9,11 +9,11 @@
     "frameworksBackend": {
       "region": "us-central1"
     },
-    "public":"out",
-    "cleanUrls":true,
+    "public": ".next",
     "rewrites": [
       {
-        "dynamicLinks": true
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }
