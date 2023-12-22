@@ -27,23 +27,28 @@ export const getUserDetails = async (user: User | null): Promise<UserProfileDeta
 };
 
 export const getOtherUser = async (user: User | null, reqUID: string) => {
-    if (user === null) return null;
-    const jwt = await user.getIdToken();
-    const result = await fetch(`${serverURL}/get_other_user_profile?uid=${reqUID}`, {
-        headers: {
-            'Authorization': `Bearer ${jwt}`,
-            'Content-Type': 'application/json',
-        },
-        mode: 'cors'
-    })
-    .then((res)=>res.json())
-    .then((val)=>{
-        return val;
-    })
-    .catch((err)=>{
-        return null;
-    });
-    return result;
+    try {
+        if (user === null || reqUID === null) return null;
+        const jwt = await user.getIdToken();
+        const result = await fetch(`${serverURL}/get_other_user_profile?uid=${reqUID}`, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors'
+        })
+        .then((res)=>res.json())
+        .then((val)=>{
+            return val;
+        })
+        .catch((err)=>{
+            return null;
+        });
+        return result;
+    } catch (err) {
+        console.log('Error: ', err);
+        throw new Error('Failed to get other users info');
+    }
 }
 
 export const updateProfilePicture = (user: User, file: Blob) => {
@@ -92,24 +97,29 @@ export const updateUserDetails = async (user: User, UserDetails: UserProfileDeta
 // --- Roommates Actions ---
 
 export const getAvailableRoommates = async (user: User, page?: string | null, params?: string | null): Promise<Array<RoommatePreviewDetails> | null> => {
-    if (user === null) return null;
-    const jwt = await user.getIdToken();
-    const uid = user.uid;
-    let urlParams = ``; // Params
-    const result = await fetch(`${serverURL}/get_roommates?uid=${uid}${urlParams}`, {
-        headers: {
-            'Authorization': `Bearer ${jwt}`,
-            'Content-Type': 'application/json',
-        },
-        mode: 'cors'
-    })
-    .then((res)=>res.json())
-    .then((val)=>{
-        return val.roommates;
-    })
-    .catch((err)=>{
-        console.error(err);
-        return null;
-    });
-    return result;
+    try {
+        if (user === null) return null;
+        const jwt = await user.getIdToken();
+        const uid = user.uid;
+        let urlParams = ``; // Params
+        const result = await fetch(`${serverURL}/get_roommates?uid=${uid}${urlParams}`, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors'
+        })
+        .then((res)=>res.json())
+        .then((val)=>{
+            return val.roommates;
+        })
+        .catch((err)=>{
+            console.error(err);
+            return null;
+        });
+        return result;
+    } catch (err) {
+        console.log('Error: ', err);
+        throw new Error('Failed to get available roommates');
+    }
 }
