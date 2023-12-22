@@ -8,6 +8,14 @@
     ],
     "frameworksBackend": {
       "region": "us-central1"
-    }
+    },
+    "public":"out",
+    "cleanUrls":true,
+    "rewrites": [
+      {
+        "source": "/**", 
+        "dynamicLinks": true
+      }
+    ]
   }
 }
