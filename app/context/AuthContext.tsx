@@ -31,7 +31,7 @@ const defaultAuthContext: AuthContextType = {
 }
 const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
-const createUserMetadata = async (userCred: UserCredential, fullName: string, gender: string, userEmail?: string | undefined) => {
+const createUserMetadata = async (userCred: UserCredential, fullName: string, gender: string, userEmail: string) => {
     const uid = userCred.user.uid;
     const jwt = await userCred.user.getIdToken();
     const userInfo: UserProfileDetails = {
@@ -75,9 +75,9 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
         provider.addScope('email');
         await signInWithPopup(auth, provider)
             .then((userCred: UserCredential)=>{
-                console.log(userCred);
                 const {isNewUser} = getAdditionalUserInfo(userCred) ?? {};
-                const email = userCred._tokenResponse.email; // Reason for _tokenResponse: userCred.user.email null when first creating user
+                const providerData = userCred.user.providerData;
+                const email = providerData[0]?.email ?? "emailnotfound@email.com";
                 if (isNewUser){
                     createUserMetadata(userCred, "New User", "None", email);
                 }
