@@ -154,7 +154,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 					<form className="max-w-lg">
 						<label htmlFor="phone-input" className="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
 						<div className="flex items-center">
-								<button id="dropdown-phone-button" className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
+								<button id="dropdown-phone-button" className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100" type="button">
 										<svg fill="none" aria-hidden="true" className="h-4 w-4 me-2" viewBox="0 0 20 15">
 											<rect width="19.6" height="14" y=".5" fill="#fff" rx="2"/>
 											<mask id="a" style={{maskType:"luminance"}} width="20" height="15" x="0" y="0" maskUnits="userSpaceOnUse">
@@ -184,7 +184,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 										</svg>
 								+1 </button>
 								<div className="relative w-full">
-										<input id="phone-input" value={phoneNumber} onChange={(e)=>setPhoneNumber(e.currentTarget.value)} className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="123 456 7890" required />
+										<input id="phone-input" value={phoneNumber} onChange={(e)=>setPhoneNumber(e.currentTarget.value)} className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="123 456 7890" required />
 								</div>
 								{/* credit: https://flowbite.com/docs/forms/number-input/ */}
 						</div>
@@ -199,7 +199,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 				<div className="pb-4  mt-2">
 					<label className="text-sm font-medium leading-6 text-gray-900">My gender is
 					<div className="flex flex-col sm:flex-row py-2">
-						<button onClick={()=>setGender("male")} type="button" className={`text-white ${gender === "male" ? "bg-blue-800" : "bg-slate-400"} hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+						<button onClick={()=>setGender("male")} type="button" className={`text-white ${gender === "male" ? "bg-blue-800" : "bg-slate-400"} hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 							Male
 							<svg className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 512 512">
 									<path d="M220.07,152.702c-84.202,0-152.702,68.5-152.702,152.702s68.5,152.702,152.702,152.702s152.702-68.5,152.702-152.702
@@ -212,7 +212,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 											S390.737,211.294,390.737,305.404z"/>
 							</svg>
 						</button>
-						<button onClick={()=>setGender("female")} type="button" className={`text-white ${gender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+						<button onClick={()=>setGender("female")} type="button" className={`text-white ${gender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 							Female
 							<svg className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 512 512">
 									<path d="M256,51.2c-61.167,0-110.933,49.766-110.933,110.933S194.833,273.067,256,273.067S366.933,223.3,366.933,162.133
@@ -224,7 +224,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 											c-70.579,0-128-57.421-128-128s57.421-128,128-128s128,57.421,128,128S326.579,290.133,256,290.133z"/>
 							</svg>
 						</button>
-						<button onClick={()=>setGender("nonbinary")} type="button" className={`text-white ${gender === "nonbinary" ? " bg-purple-500" : "bg-slate-400"} hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+						<button onClick={()=>setGender("nonbinary")} type="button" className={`text-white ${gender === "nonbinary" ? " bg-purple-500" : "bg-slate-400"} hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 							Nonbinary
 							<svg fill="#ffffff" className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
 								<g strokeWidth="0"/>
@@ -242,7 +242,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 					<h1 className="pt-1 text-xl font-bold">Preferences</h1>
 					<label className="text-sm font-medium leading-6 text-gray-900">I will only room with
 						<div className="flex flex-col sm:flex-row py-2">
-							<button onClick={()=>setRoomWithGender("male")} type="button" className={`text-white ${roomWithGender === "male" ? "bg-blue-800" : "bg-slate-400"} hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+							<button onClick={()=>setRoomWithGender("male")} type="button" className={`text-white ${roomWithGender === "male" ? "bg-blue-800" : "bg-slate-400"} hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 								Male
 								<svg className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 512 512">
 										<path d="M220.07,152.702c-84.202,0-152.702,68.5-152.702,152.702s68.5,152.702,152.702,152.702s152.702-68.5,152.702-152.702
@@ -255,7 +255,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 												S390.737,211.294,390.737,305.404z"/>
 								</svg>
 							</button>
-							<button onClick={()=>setRoomWithGender("female")} type="button" className={`text-white ${roomWithGender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+							<button onClick={()=>setRoomWithGender("female")} type="button" className={`text-white ${roomWithGender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 								Female
 								<svg className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 512 512">
 										<path d="M256,51.2c-61.167,0-110.933,49.766-110.933,110.933S194.833,273.067,256,273.067S366.933,223.3,366.933,162.133
@@ -267,7 +267,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 												c-70.579,0-128-57.421-128-128s57.421-128,128-128s128,57.421,128,128S326.579,290.133,256,290.133z"/>
 								</svg>
 							</button>
-							<button onClick={()=>setRoomWithGender("nonbinary")} type="button" className={`text-white ${roomWithGender === "nonbinary" ? " bg-purple-500" : "bg-slate-400"} hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+							<button onClick={()=>setRoomWithGender("nonbinary")} type="button" className={`text-white ${roomWithGender === "nonbinary" ? " bg-purple-500" : "bg-slate-400"} hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 								Nonbinary
 								<svg fill="#ffffff" className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
 									<g strokeWidth="0"/>
@@ -275,7 +275,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 									<g><path d="M136,88.42383V59.01465l23.25049,15.625a7.99987,7.99987,0,1,0,8.9248-13.2793L142.34253,44l25.83276-17.36035a7.99987,7.99987,0,1,0-8.9248-13.2793L128,34.36133l-31.25049-21.001a7.99987,7.99987,0,1,0-8.9248,13.2793L113.65747,44,87.82471,61.36035a7.99987,7.99987,0,1,0,8.9248,13.2793L120,59.01465V88.42383a76,76,0,1,0,16,0ZM128,224a60,60,0,1,1,60-60A60.06812,60.06812,0,0,1,128,224Z"/></g>
 								</svg>
 							</button>
-							<button onClick={()=>setRoomWithGender("any")} type="button" className={`text-white ${roomWithGender === "any" ? " bg-emerald-500" : "bg-slate-400"} hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+							<button onClick={()=>setRoomWithGender("any")} type="button" className={`text-white ${roomWithGender === "any" ? " bg-emerald-500" : "bg-slate-400"} hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 								Any
 							</button>
 						</div>
@@ -286,31 +286,31 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 					<div className="pb-8 col-span-full mt-2">
 						<label htmlFor="havePetsCheckbox" className="text-md font-bold leading-6 text-gray-900">Pets</label>
 						<div className="flex items-center mb-4">
-							<input id="havePetsCheckbox" type="checkbox" checked={doIHavePets} onChange={setDoIHavePetsHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-							<label htmlFor="havePetsCheckbox" className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300">I have pet(s)</label>
+							<input id="havePetsCheckbox" type="checkbox" checked={doIHavePets} onChange={setDoIHavePetsHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+							<label htmlFor="havePetsCheckbox" className="ms-2 text-md font-medium text-gray-900">I have pet(s)</label>
 						</div>
 						<div className="flex items-center mb-4">
-							<input id="fineWithHavingPetsCheckbox" type="checkbox" checked={fineWithHavingPets} onChange={setFineWithHavingPetsHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-							<label htmlFor="fineWithHavingPetsCheckbox" className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300">I&apos;m fine with my roommates having pets</label>
+							<input id="fineWithHavingPetsCheckbox" type="checkbox" checked={fineWithHavingPets} onChange={setFineWithHavingPetsHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+							<label htmlFor="fineWithHavingPetsCheckbox" className="ms-2 text-md font-medium text-gray-900">I&apos;m fine with my roommates having pets</label>
 						</div>
 					</div>
 					{/* Smokers */}
 					<div className="pb-8 col-span-full mt-2">
 						<label htmlFor="doISmokeCheckbox" className="text-md font-bold leading-6 text-gray-900">Smokers</label>
 						<div className="flex items-center mb-4">
-							<input id="doISmokeCheckbox" type="checkbox" checked={doISmoke} onChange={setDoISmokeHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-							<label htmlFor="doISmokeCheckbox" className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300">I smoke regularly</label>
+							<input id="doISmokeCheckbox" type="checkbox" checked={doISmoke} onChange={setDoISmokeHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+							<label htmlFor="doISmokeCheckbox" className="ms-2 text-md font-medium text-gray-900">I smoke regularly</label>
 						</div>
 						<div className="flex items-center mb-4">
-							<input id="fineWithSmokersCheckbox" type="checkbox" checked={fineWithSmokers} onChange={setFineWithSmokersHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-							<label htmlFor="fineWithSmokersCheckbox" className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300">I&apos;m fine with my roommates smoking</label>
+							<input id="fineWithSmokersCheckbox" type="checkbox" checked={fineWithSmokers} onChange={setFineWithSmokersHandler} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" />
+							<label htmlFor="fineWithSmokersCheckbox" className="ms-2 text-md font-medium text-gray-900">I&apos;m fine with my roommates smoking</label>
 						</div>
 					</div>
 				</div>
 			</div>
 			{/* Save Button */}
 			<div id="save">
-				<button id="save-button" type="button" onClick={saveUserDataHandler} className={`text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-5 text-center inline-flex items-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>
+				<button id="save-button" type="button" onClick={saveUserDataHandler} className={`text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-5 text-center inline-flex items-center me-2 mb-2 `}>
 					Save
 				</button>
 			</div>

@@ -17,10 +17,10 @@ export default function ExperienceCard(
                     <div className="flex gap-4 items-start">
                         <div className="grid gap-0.5 text-sm">
                             <h3 className="font-semibold">{displayName}</h3>
-                            <h3 className="text-sm text-gray-500 dark:text-gray-400">{date}</h3>
+                            <h3 className="text-sm text-gray-500">{date}</h3>
                         </div>
                     </div>
-                    <div className="text-sm leading-loose text-gray-500 dark:text-gray-400">
+                    <div className="text-sm leading-loose text-gray-500">
                         <p>{experience}</p>
                     </div>
                 </div>

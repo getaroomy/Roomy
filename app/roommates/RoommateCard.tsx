@@ -8,7 +8,7 @@ export default function RoommateCard(
   {uid, displayName, bio, photoURL, city}:RoommatePreviewDetails) {
   return (
     <div
-      className="border bg-gray-100 dark:bg-gray-900 p-6 w-[300px] rounded-lg shadow-lg"
+      className="border bg-gray-100 p-6 w-[300px] rounded-lg shadow-lg"
     >
       <div className="flex flex-col space-y-1.5 p-6">
         <div className="flex items-center space-x-4">
@@ -19,7 +19,7 @@ export default function RoommateCard(
           </span>
           <div className="space-y-1">
             <h2 className="text-lg font-semibold">{displayName}</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400"></p> {/* */}
+            <p className="text-sm text-gray-500"></p> {/* */}
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@ export default function RoommateCard(
           {bio}
         </p>
       </div>
-      <div className="flex items-center p-6 bg-gray-200 dark:bg-gray-800 py-4 rounded-md">
+      <div className="flex items-center p-6 bg-gray-200 py-4 rounded-md">
         <div className="flex justify-between items-center">
           <div className="inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground items-center">
             <svg
