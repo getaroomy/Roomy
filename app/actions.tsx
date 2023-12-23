@@ -107,7 +107,7 @@ export const getAvailableRoommates = async (user: User, page?: string | null, pa
                 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json',
             },
-            mode: 'no-cors'
+            mode: 'cors'
         })
         .then((res)=>res.json())
         .then((val)=>{
