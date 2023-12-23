@@ -9,6 +9,7 @@ import {GoogleAuthProvider,
     User,
     getAdditionalUserInfo} from "firebase/auth"
 import { auth } from "../firebase";
+import { UserProfileDetails } from "@/app/lib/exports";
 
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -30,9 +31,29 @@ const defaultAuthContext: AuthContextType = {
 }
 const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
-const createUserMetadata = async (userCred: UserCredential, fullName: string, gender: string) => {
+const createUserMetadata = async (userCred: UserCredential, fullName: string, gender: string, userEmail?: string | undefined) => {
     const uid = userCred.user.uid;
     const jwt = await userCred.user.getIdToken();
+    const userInfo: UserProfileDetails = {
+        uid,
+        bio: '',
+        displayName: fullName,
+        photoURL: '',
+        phoneNumber: '',
+        showPhoneNumber: false,
+        gender,
+        experiences: [],
+        looking: true,
+        email: userEmail,
+        preferences: {
+            roomWithGender: gender,
+            doIHavePets: false,
+            fineWithHavingPets: false,
+            doISmoke: false,
+            fineWithSmokers: false
+        },
+        status: 'Renter',
+    }
     const res = await fetch(`${serverURL}/set_user_info`, {
         headers: {
             'Authorization': `Bearer ${jwt}`,
@@ -40,25 +61,7 @@ const createUserMetadata = async (userCred: UserCredential, fullName: string, ge
         },
         mode: 'cors',
         method: 'POST',
-        body: JSON.stringify({
-            uid,
-            bio: '',
-            displayName: fullName,
-            photoURL:'',
-            phoneNumber: '',
-            showPhoneNumber: false,
-            gender: gender,
-            experiences: [],
-            looking: true,
-            preferences: {
-                roomWithGender: '',
-                doIHavePetsdoIHavePets: false,
-                fineWithHavingPets: false,
-                doISmoke: false,
-                fineWithSmokers: false,
-            },
-            status: 'Renter',
-        })
+        body: JSON.stringify(userInfo)
     });
 }
 
@@ -72,8 +75,12 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
         provider.addScope('email');
         await signInWithPopup(auth, provider)
             .then((userCred: UserCredential)=>{
+                console.log(userCred);
                 const {isNewUser} = getAdditionalUserInfo(userCred) ?? {};
-                if (isNewUser) createUserMetadata(userCred, "New User", "None");
+                const email = userCred._tokenResponse.email; // Reason for _tokenResponse: userCred.user.email null when first creating user
+                if (isNewUser){
+                    createUserMetadata(userCred, "New User", "None", email);
+                }
                 else console.log("User already exists with this Gmail account!");
             })
             .catch((err)=>{
@@ -94,7 +101,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
     const emailCreateAccount = async (email:string, password:string, fullName:string, gender:string) => {
         try {
             await createUserWithEmailAndPassword(auth, email, password)
-                .then((userCred: UserCredential)=>createUserMetadata(userCred, fullName, gender))
+                .then((userCred: UserCredential)=>createUserMetadata(userCred, fullName, gender, email))
                 .catch((err)=>{
                     console.error(err);
                 })
