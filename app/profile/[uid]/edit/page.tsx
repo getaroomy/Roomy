@@ -25,6 +25,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 	const [fineWithSmokers, setFineWithSmokers] = useState<boolean>(false);
 	const [tempProfilePic, setTempProfilePic] = useState<string | ArrayBuffer | null | undefined>();
 	const [tempProfilePicFile, setTempProfilePicFile] = useState<Blob | null>();
+	const [looking, setLooking] = useState<boolean>(false);
 
 	useEffect(()=>{
 		if (!user && !loading) router.push("/auth");
@@ -53,6 +54,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
         setFineWithHavingPets(currentUser?.preferences?.fineWithHavingPets || false);
 		setDoISmoke(currentUser?.preferences?.doISmoke || false);
 		setFineWithSmokers(currentUser?.preferences?.fineWithSmokers || false);
+		setLooking(currentUser?.looking || false);
     }, [currentUser]);
 
 	const setShowPhoneNumberHandler = () => {
@@ -73,6 +75,10 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 		setFineWithSmokers(!fineWithSmokers);
 	}
 
+	const setLookingHandler = () => {
+		setLooking(!looking);
+	}
+
 	const saveUserDataHandler = () => {
 		if(currentUser === null || currentUser === undefined || user === null) {
 			return;
@@ -91,7 +97,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 				doISmoke,
         		fineWithSmokers,
 			},
-			looking: true,
+			looking,
 		}
 		updateUserDetails(user, userDetails);
 	}
@@ -133,17 +139,35 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 					: null}
 					<input type="file" id="profilePicUpload" accept="image/*" hidden onChange={handleProfilePicChange}/>
 				</div>
-				<h1 className="text-2xl">{displayName}</h1>
+				<div className="pt-2 rounded">
+					<label htmlFor="one" className="h-6 relative inline-block">
+						<input id="one" type="checkbox" checked={looking} onChange={setLookingHandler} className="w-11 h-0 cursor-pointer inline-block focus:outline-0 dark:focus:outline-0 border-0 dark:border-0
+						focus:ring-offset-transparent dark:focus:ring-offset-transparent focus:ring-transparent dark:focus:ring-transparent focus-within:ring-0 dark:focus-within:ring-0
+						focus:shadow-none dark:focus:shadow-none after:absolute before:absolute after:top-0 before:top-0 after:block before:inline-block before:rounded-full after:rounded-full
+						after:content-[''] after:w-5 after:h-5 after:mt-0.5 after:ml-0.5 after:shadow-md after:duration-100 before:content-[''] before:w-10 before:h-full before:shadow-[inset_0_0_#000]
+						after:bg-white dark:after:bg-gray-50 before:bg-gray-300 dark:before:bg-gray-600 before:checked:bg-green-400 dark:before:checked:bg-green-400 checked:after:duration-300 checked:after:translate-x-4
+						disabled:after:bg-opacity-75 disabled:cursor-not-allowed disabled:checked:before:bg-opacity-40" />
+						Profile Visibility: {looking ? " Public" : " Private"}
+					</label>
+				</div>
 			</div>
 			{/* Personal Info */}
 			<div id="personalInfo" className="border-b-2 border-dashed">
 				<h1 className="pt-1 text-xl font-bold">Personal Info</h1>
+				{/* Display Name */}
+				<div className="pb-4 col-span-full mt-2">
+					<label htmlFor="displayName" className="block text-sm font-medium leading-6 text-gray-900">Your Name</label>
+					<input id="displayName" type="text" value={displayName} onChange={(e)=>setDisplayName(e.currentTarget.value)}
+						className="block sm:w-full lg:w-1/6 rounded-md border-0 py-1.5
+						text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+						placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+				</div>
 				{/* Bio */}
 				<div className="pb-4 col-span-full mt-2">
 					<label htmlFor="bio" className="block text-sm font-medium leading-6 text-gray-900">Profile Bio</label>
 					<div className="mt-2">
 						<textarea id="bio" name="bio" value={bio} onChange={(e)=>setBio(e.currentTarget.value)} rows={3}
-						className="block w-full rounded-md border-0 py-1.5
+						className="block sm:w-full lg:w-1/2 rounded-md border-0 py-1.5
 							text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
 							placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
 					</div>
