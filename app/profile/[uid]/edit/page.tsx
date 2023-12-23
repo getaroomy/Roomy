@@ -91,7 +91,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 				doISmoke,
         		fineWithSmokers,
 			},
-			looking: false,
+			looking: true,
 		}
 		updateUserDetails(user, userDetails);
 	}
