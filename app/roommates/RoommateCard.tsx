@@ -14,6 +14,7 @@ export default function RoommateCard(
         <div className="flex items-center space-x-4">
           <span className="flex shrink-0 overflow-hidden rounded-full">
             <Image
+              unoptimized
               src={photoURL || UserProfileLogo}
               className="flex items-center justify-center rounded-full" width={64} height={64} alt={'Users Picture'} />
           </span>
