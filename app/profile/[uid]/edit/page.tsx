@@ -140,12 +140,12 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 					<input type="file" id="profilePicUpload" accept="image/*" hidden onChange={handleProfilePicChange}/>
 				</div>
 				<div className="pt-2 rounded">
-					<label htmlFor="one" className="h-6 relative inline-block">
-						<input id="one" type="checkbox" checked={looking} onChange={setLookingHandler} className="w-11 h-0 cursor-pointer inline-block focus:outline-0 dark:focus:outline-0 border-0 dark:border-0
-						focus:ring-offset-transparent dark:focus:ring-offset-transparent focus:ring-transparent dark:focus:ring-transparent focus-within:ring-0 dark:focus-within:ring-0
-						focus:shadow-none dark:focus:shadow-none after:absolute before:absolute after:top-0 before:top-0 after:block before:inline-block before:rounded-full after:rounded-full
+					<label htmlFor="profileVisibilityCheckbox" className="h-6 relative inline-block">
+						<input id="profileVisibilityCheckbox" type="checkbox" checked={looking} onChange={setLookingHandler} className="w-11 h-0 cursor-pointer inline-block focus:outline-0 border-0
+						focus:ring-offset-transparent focus:ring-transparent focus-within:ring-0
+						focus:shadow-none after:absolute before:absolute after:top-0 before:top-0 after:block before:inline-block before:rounded-full after:rounded-full
 						after:content-[''] after:w-5 after:h-5 after:mt-0.5 after:ml-0.5 after:shadow-md after:duration-100 before:content-[''] before:w-10 before:h-full before:shadow-[inset_0_0_#000]
-						after:bg-white dark:after:bg-gray-50 before:bg-gray-300 dark:before:bg-gray-600 before:checked:bg-green-400 dark:before:checked:bg-green-400 checked:after:duration-300 checked:after:translate-x-4
+						after:bg-white before:bg-gray-300 before:checked:bg-green-400 checked:after:duration-300 checked:after:translate-x-4
 						disabled:after:bg-opacity-75 disabled:cursor-not-allowed disabled:checked:before:bg-opacity-40" />
 						Profile Visibility: {looking ? " Public" : " Private"}
 					</label>
@@ -213,11 +213,19 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 								{/* credit: https://flowbite.com/docs/forms/number-input/ */}
 						</div>
 					</form>
-					<label className="relative flex items-center p-2 text-sm">
-						Make phone number visible to public:
-						<input id="visible-number-checkbox" type="checkbox" checked={showPhoneNumber} onChange={setShowPhoneNumberHandler} className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md" />
-						<span className="w-8 h-5 flex items-center flex-shrink-0 ml-4 p-1 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-green-400 after:w-4 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-3"></span>
-					</label>
+					<div className="pt-2 rounded flex">
+						<label htmlFor="phoneNumberVisibility" className="h-6 relative inline-block">
+							Make phone number visible to public:&nbsp;
+						</label>
+						<div>
+							<input id="phoneNumberVisibility" type="checkbox" checked={showPhoneNumber} onChange={setShowPhoneNumberHandler} className="h-6 relative w-11 cursor-pointer inline-block focus:outline-0 border-0
+								focus:ring-offset-transparent focus:ring-transparent focus-within:ring-0
+								focus:shadow-none after:absolute before:absolute after:top-0 before:top-0 after:block before:inline-block before:rounded-full after:rounded-full
+								after:content-[''] after:w-5 after:h-5 after:mt-0.5 after:ml-0.5 after:shadow-md after:duration-100 before:content-[''] before:w-10 before:h-full before:shadow-[inset_0_0_#000]
+								after:bg-white before:bg-gray-300 before:checked:bg-green-400 checked:after:duration-300 checked:after:translate-x-4
+								disabled:after:bg-opacity-75 disabled:cursor-not-allowed disabled:checked:before:bg-opacity-40" />
+						</div>
+					</div>
 				</div>
 				{/* Gender */}
 				<div className="pb-4  mt-2">
