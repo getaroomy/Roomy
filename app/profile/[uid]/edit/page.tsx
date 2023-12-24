@@ -25,6 +25,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 	const [fineWithSmokers, setFineWithSmokers] = useState<boolean>(false);
 	const [tempProfilePic, setTempProfilePic] = useState<string | ArrayBuffer | null | undefined>();
 	const [tempProfilePicFile, setTempProfilePicFile] = useState<Blob | null>();
+	const [pictureFileName, setPictureFileName] = useState<string>("");
 	const [looking, setLooking] = useState<boolean>(false);
 
 	useEffect(()=>{
@@ -108,12 +109,13 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 		fReader.readAsDataURL(e.target.files[0]);
 		fReader.onloadend = function(event){
 			setTempProfilePic(event.target?.result);
+			setPictureFileName(e.target.files[0].name);
 		}
 	}
 
 	const saveProfilePicture = () => {
 		if (user?.uid && tempProfilePicFile){
-			updateProfilePicture(user, tempProfilePicFile);
+			updateProfilePicture(user, tempProfilePicFile, pictureFileName);
 			setTempProfilePic(null);
 		}
 	}
