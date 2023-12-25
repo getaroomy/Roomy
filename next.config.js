@@ -11,6 +11,7 @@ const nextConfig = {
                 hostname: 'firebasestorage.googleapis.com',
             },
         ],
+        unoptimized: true
     },
 }
 
