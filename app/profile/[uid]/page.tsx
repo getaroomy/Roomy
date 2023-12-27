@@ -9,6 +9,7 @@ import UserProfileLogo from "@/public/user-profile-logo.svg";
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/20/solid";
 import ExperienceCard from "./ExperienceCard";
 import Link from "next/link";
+import PostExperience from "./PostExperience";
 
 export default function Page({ params }: { params: { uid: string } }) {
     const router = useRouter();
@@ -101,6 +102,7 @@ export default function Page({ params }: { params: { uid: string } }) {
 			</div>
 			<div id="experiences" className="pb-8 items-center col-span-full mt-2">
 				<h1 className="mt-2 text-2xl font-bold">Experiences</h1>
+				<PostExperience posterUser={user} uid={currentUser?.uid} />
 				<ul>
 					{
 						experiencesList.map((exp, index)=>{

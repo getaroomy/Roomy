@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { RoommatePreviewDetails, UserProfileDetails } from "./lib/exports";
+import { ProfileExperience, RoommatePreviewDetails, UserProfileDetails } from "./lib/exports";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -92,6 +92,24 @@ export const updateUserDetails = async (user: User, UserDetails: UserProfileDeta
     } else {
         console.log("You're trying to edit someone else's account");
     }
+}
+
+export const addExperienceWithUser = async (user: User, profileExp: ProfileExperience, targetUid: string) => {
+    if (user === null) return null;
+    const jwt = await user.getIdToken();
+    const body = {
+        "target_uid": targetUid,
+        "experience": profileExp
+    }
+    const result = await fetch(`${serverURL}/post_experience`,{
+        headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        method: 'POST',
+        body: JSON.stringify(body)
+    });
 }
 
 // --- Roommates Actions ---

@@ -21,7 +21,7 @@ export type UserProfileDetails = {
 
 export type ProfileExperience = {
     uid: string,
-    displayName: string,
+    displayName?: string,
     experience: string,
     photoURL?: string,
     date?: string
