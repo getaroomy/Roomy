@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { uid: string } }) {
 	},[loading, params.uid, router, user]);
 
 	const experiencesList = currentUser?.experiences || [];
-
+	const lookingAtOwnProfile = currentUser?.uid === user?.uid;
     return (
         <main className="grid-cols-1 px-24 py-12 sm:grid-cols-6">
             {/* Header */}
@@ -102,7 +102,9 @@ export default function Page({ params }: { params: { uid: string } }) {
 			</div>
 			<div id="experiences" className="pb-8 items-center col-span-full mt-2">
 				<h1 className="mt-2 text-2xl font-bold">Experiences</h1>
-				<PostExperience posterUser={user} uid={currentUser?.uid} />
+				{!lookingAtOwnProfile ?
+					<PostExperience posterUser={user} uid={currentUser?.uid} />
+				: null}
 				<ul>
 					{
 						experiencesList.map((exp, index)=>{
