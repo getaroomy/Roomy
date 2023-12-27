@@ -33,7 +33,7 @@ export const Sidebar = (
           </svg>
         </button>
 
-        <ul className="sidebar-nav text-center leading-relaxed text-xl">
+        <ul className="sidebar-nav text-center space-y-10 text-3xl">
           <li>
             <Link href="/roommates" onClick={toggle}>
               <p>Roommates</p>

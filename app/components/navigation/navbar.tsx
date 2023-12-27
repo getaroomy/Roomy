@@ -3,6 +3,7 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Image from "next/image";
 import ProfileDefaultLogo from "@/public/profile-default.svg";
+import RoomyLogo from "@/public/roomy-logo.png";
 
 export const Navbar = (
   { toggle, logOut, uid }:
@@ -29,31 +30,33 @@ export const Navbar = (
   }
 
   return (
-    <div className="w-full bg-neutral-900 h-20 sticky top-0">
+    <div className="w-full bg-[#ffffff] h-20 sticky top-0">
       <div className="container mx-auto px-4 h-full">
         <div className="flex justify-between items-center h-full">
-          <Link href="/">
-            {/* Replace with image eventually */}
-            <h1 className="md:flex gap-x-6 text-white hover:text-violet-400 text-lg ">Homepage</h1>
-          </Link>
+          <div className="flex items-center space-x-8">
+            <Link href="/">
+              <Image src={RoomyLogo} alt="Roomy logo" width={64} height={64} className="md:flex gap-x-6"/>
+            </Link>
+            
+            <Link href="/roommates" className="hidden md:flex gap-x-6 text-black text-lg">
+              <p className="hover:text-violet-400">Roommates</p>
+            </Link>
+            <Link href="/rentals" className="hidden md:flex gap-x-6 text-black text-lg">
+              <p className="hover:text-violet-400">Rentals</p>
+            </Link>
+          </div>
+          <div className="relative text-left hidden md:block">
+            <Image onBlur={()=>showProfileDropdown(!profileDropdown)} onClick={() => showProfileDropdown(!profileDropdown)} height={64} width={64} src={ProfileDefaultLogo} alt="Profile Picture"/>
+            {profileDropdown ? <DropdownComponent /> : null }
+          </div>
           <button
             type="button"
             className="inline-flex items-center md:hidden"
             onClick={toggle}
           >
             {/* Burger button on smaller screens */}
-            <Bars3Icon height={40} width={40} color="white"/>
+            <Bars3Icon height={40} width={40} color="black"/>
           </button>
-          <Link href="/roommates" className="hidden md:flex gap-x-6 text-white text-lg">
-            <p className="hover:text-violet-400">Roommates</p>
-          </Link>
-          <Link href="/rentals" className="hidden md:flex gap-x-6 text-white text-lg">
-            <p className="hover:text-violet-400">Rentals</p>
-          </Link>
-          <div className="relative text-left hidden md:block">
-            <Image onBlur={()=>showProfileDropdown(!profileDropdown)} onClick={() => showProfileDropdown(!profileDropdown)} height={64} width={64} className="text-white hover:text-violet-400" src={ProfileDefaultLogo} alt="Profile Picture"/>
-            {profileDropdown ? <DropdownComponent /> : null }
-          </div>
         </div>
       </div>
     </div>
