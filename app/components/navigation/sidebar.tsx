@@ -35,6 +35,11 @@ export const Sidebar = (
 
         <ul className="sidebar-nav text-center space-y-10 text-3xl">
           <li>
+            <Link href="/" onClick={toggle}>
+              <p>Home</p>
+            </Link>
+          </li>
+          <li>
             <Link href="/roommates" onClick={toggle}>
               <p>Roommates</p>
             </Link>

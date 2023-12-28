@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import ProfileDefaultLogo from "@/public/profile-default.svg";
 import RoomyLogo from "@/public/roomy-logo.png";
+import Searchbar from "../searchbar";
 
 export const Navbar = (
   { toggle, logOut, uid }:
@@ -18,7 +19,7 @@ export const Navbar = (
 
   const DropdownComponent = () => {
     return (
-      <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+      <div tabIndex={100} className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
         <div className="py-1" onClick={()=>showProfileDropdown(!profileDropdown)}>
           <Link href={`/profile/${uid}`} className="text-gray-700 block px-4 py-2 text-md">My Profile</Link>
         </div>
@@ -29,6 +30,12 @@ export const Navbar = (
     );
   }
 
+  const handleBlur = (event: any) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      showProfileDropdown(false);
+    }
+  }
+
   return (
     <div className="w-full bg-[#ffffff] h-20 sticky top-0">
       <div className="container mx-auto px-4 h-full">
@@ -37,17 +44,24 @@ export const Navbar = (
             <Link href="/">
               <Image src={RoomyLogo} alt="Roomy logo" width={64} height={64} className="md:flex gap-x-6"/>
             </Link>
-            
             <Link href="/roommates" className="hidden md:flex gap-x-6 text-black text-lg">
               <p className="hover:text-violet-400">Roommates</p>
             </Link>
             <Link href="/rentals" className="hidden md:flex gap-x-6 text-black text-lg">
               <p className="hover:text-violet-400">Rentals</p>
             </Link>
+            <div className="md:flex gap-x-6 text-black text-lg">
+              <Searchbar />
+            </div>
           </div>
           <div className="relative text-left hidden md:block">
-            <Image onBlur={()=>showProfileDropdown(!profileDropdown)} onClick={() => showProfileDropdown(!profileDropdown)} height={64} width={64} src={ProfileDefaultLogo} alt="Profile Picture"/>
-            {profileDropdown ? <DropdownComponent /> : null }
+            <div onBlur={handleBlur} onFocus={() => showProfileDropdown(true)} tabIndex={100}>
+              <Image
+                height={64} width={64}
+                src={ProfileDefaultLogo} alt="Profile Picture"
+                />
+              {profileDropdown ? <DropdownComponent /> : null }
+            </div>
           </div>
           <button
             type="button"
