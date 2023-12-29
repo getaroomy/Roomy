@@ -105,6 +105,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 			city
 		}
 		updateUserDetails(user, userDetails);
+		router.push(`/profile/${user.uid}`);
 	}
 
 	const handleProfilePicChange = (e: any) => {
