@@ -21,11 +21,11 @@ export default function RoommateCard(
           </span>
           <div className="space-y-1">
             <h2 className="text-lg font-semibold">{displayName}</h2>
-            <p className="text-sm text-gray-500"></p> {/* */}
+            <p className="text-sm text-gray-500"></p>
           </div>
         </div>
       </div>
-      <div className="p-6 py-4 border-y">
+      <div className="p-6 py-4 border-y h-32">
         <p className="text-sm line-clamp-4">
           {bio}
         </p>
@@ -48,7 +48,7 @@ export default function RoommateCard(
               <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            {city}
+            <h2>{city}</h2>
           </div>
           <Link 
             href={`/profile/${uid}`}
