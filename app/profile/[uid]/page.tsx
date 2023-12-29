@@ -6,7 +6,7 @@ import { getOtherUser } from "@/app/actions";
 import { UserProfileDetails } from "@/app/lib/exports";
 import Image from "next/image";
 import UserProfileLogo from "@/public/user-profile-logo.svg";
-import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/20/solid";
+import { MapPinIcon } from "@heroicons/react/20/solid";
 import ExperienceCard from "./ExperienceCard";
 import Link from "next/link";
 import PostExperience from "./PostExperience";
@@ -42,22 +42,28 @@ export default function Page({ params }: { params: { uid: string } }) {
 				</div>
 				<h1 id="displayName" className="mt-2 text-2xl font-bold">{currentUser?.displayName  || "Display Name"}</h1>
 				<h2 id="bio" className="mt-2 text-xl">{currentUser?.bio || "This is my bio"}</h2>
-				<div id="contactInfo" className="mt-1">
-					<div id="phone" className="flex">
-						<PhoneIcon height={24} width={24} className="text-purple-500" />
+				<div id="contactInfo" className="mt-2 rounded-lg border shadow-sm max-w-md p-6 space-y-4">
+					<h2 className="text-xl font-bold">Contact Info</h2>
+					<div id="phone" className="space-y-2">
 						<p className="font-bold">
-							Phone Number:&nbsp;
+							Phone:&nbsp;
 						</p>
-						{ currentUser?.showPhoneNumber ?
-							<a href={`tel:${currentUser?.phoneNumber}`}>{currentUser?.phoneNumber}</a>
-						: "***-***-****" }
+						<p>{ currentUser?.showPhoneNumber ?
+							<Link href={`tel:${currentUser?.phoneNumber}`}>{currentUser?.phoneNumber}</Link>
+						: "***-***-****" }</p>
 					</div>
-					<div id="email" className="flex">
-						<EnvelopeIcon height={24} width={24} className="text-purple-500" />
-						<p className="font-bold">
+					<div id="email" className="space-y-2">
+						<p className="font-bold truncate">
 							Email:
 						</p>
-						{currentUser?.email}
+						<p><Link href={`mailto:${currentUser?.email}`}>{currentUser?.email}</Link></p>
+					</div>
+				</div>
+				<div id="city" className="mt-2">
+					<h2 className="text-lg font-bold">City</h2>
+					<div className="flex">
+						<MapPinIcon color="red" height={24} width={24}/>
+						<h3>{currentUser?.city}</h3>
 					</div>
 				</div>
 			</div>
