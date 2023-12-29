@@ -40,7 +40,10 @@ export default function Page({ params }: { params: { uid: string } }) {
 						<Link href={`/profile/${user?.uid}/edit`} className="bg-purple-200 rounded-md m-4 px-8 py-4 text-center inline-flex items-center hover:bg-purple-400">Edit Profile</Link>
 					}
 				</div>
-				<h1 id="displayName" className="mt-2 text-2xl font-bold">{currentUser?.displayName  || "Display Name"}</h1>
+				<div className="mt-2 items-end">
+					<h1 id="displayName" className="text-2xl font-bold">{currentUser?.displayName  || "Display Name"}</h1>
+					<h2 id="gender" className="text-base first-letter:capitalize">{currentUser?.gender}</h2>
+				</div>
 				<h2 id="bio" className="mt-2 text-xl">{currentUser?.bio || "This is my bio"}</h2>
 				<div id="contactInfo" className="mt-2 rounded-lg border shadow-sm max-w-md p-6 space-y-4">
 					<h2 className="text-xl font-bold">Contact Info</h2>
