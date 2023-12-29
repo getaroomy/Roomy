@@ -114,13 +114,12 @@ export const addExperienceWithUser = async (user: User, profileExp: ProfileExper
 
 // --- Roommates Actions ---
 
-export const getAvailableRoommates = async (user: User, page?: string | null, params?: string | null): Promise<Array<RoommatePreviewDetails> | null> => {
+export const getAvailableRoommates = async (user: User, params?: string | null): Promise<Array<RoommatePreviewDetails> | null> => {
     try {
         if (user === null) return null;
         const jwt = await user.getIdToken();
         const uid = user.uid;
-        let urlParams = ``; // Params
-        const result = await fetch(`${serverURL}/get_roommates?uid=${uid}${urlParams}`, {
+        const result = await fetch(`${serverURL}/get_roommates?uid=${uid}${params}`, {
             headers: {
                 'Authorization': `Bearer ${jwt}`,
                 'Content-Type': 'application/json',

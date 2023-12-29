@@ -4,18 +4,17 @@ import Spinner from "@/public/spinner.svg";
 import Image from "next/image";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 
-export default function Searchbar() {
+export default function Searchbar({chooseLocation}: {chooseLocation: (city: string) => void}) {
     const {
-        placePredictions,
-        getPlacePredictions,
-        isPlacePredictionsLoading
+      placePredictions,
+      getPlacePredictions,
+      isPlacePredictionsLoading
     } = useGoogle({
-        apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-        options: {
-          types: ["(cities)"]
-        }
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      options: {
+        types: ["(cities)"]
+      }
     });
-
     const [inputValue, setInputValue] = useState("");
     const [debouncedInputValue, setDebouncedInputValue] = useState("");
     const [showAutocompleteResults, setShowAutocompleteResults] = useState(true);
@@ -31,18 +30,18 @@ export default function Searchbar() {
     }
 
     const handleCitySelection = (city: string) => {
-      console.log(city);
       setShowAutocompleteResults(false);
+      chooseLocation(city);
     }
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
-          setDebouncedInputValue(inputValue);
-          getPlacePredictions({input: inputValue});
-        }, 500);
-        return () => clearTimeout(timeoutId);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [inputValue]);
+      const timeoutId = setTimeout(() => {
+        setDebouncedInputValue(inputValue);
+        getPlacePredictions({input: inputValue});
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [inputValue]);
     
   
     return (
@@ -50,7 +49,7 @@ export default function Searchbar() {
         <div className="bg-[#FAFAFF] w-auto border-2 py-2 flex">
           <input
             value={inputValue}
-            onChange={handleInputChange} 
+            onChange={handleInputChange}
             className="bg-[#FAFAFF] ml-1"
             placeholder="Santa Cruz, CA"
           />

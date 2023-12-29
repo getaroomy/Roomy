@@ -5,11 +5,15 @@ import Image from "next/image";
 import ProfileDefaultLogo from "@/public/profile-default.svg";
 import RoomyLogo from "@/public/roomy-logo.png";
 import Searchbar from "../searchbar";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const Navbar = (
   { toggle, logOut, uid }:
   { toggle: () => void, logOut: () => void, uid: string | undefined }
 ) => {
+  const router = useRouter();
+  let path = usePathname();
   const [profileDropdown, showProfileDropdown] = useState<boolean>(false);
 
   const signOutUser = () => {
@@ -36,6 +40,12 @@ export const Navbar = (
     }
   }
 
+  const chooseLocation = (city: string) => {
+    if(path === "/roommates") router.push(`/roommates?city=${city}`);
+    else if(path === "/rentals") router.push(`/rentals?city=${city}`);
+    else if(path === "/") router.push(`?city=${city}`);
+  }
+
   return (
     <div className="w-full bg-[#ffffff] h-20 sticky top-0">
       <div className="container mx-auto px-4 h-full">
@@ -51,7 +61,7 @@ export const Navbar = (
               <p className="hover:text-violet-400">Rentals</p>
             </Link>
             <div className="md:flex gap-x-6 text-black text-lg">
-              <Searchbar />
+              <Searchbar chooseLocation={chooseLocation}/>
             </div>
           </div>
           <div className="relative text-left hidden md:block">

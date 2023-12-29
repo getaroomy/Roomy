@@ -13,6 +13,7 @@ export default function Roommates() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const page = searchParams.get("page");
+  const city = searchParams.get("city");
   const {user, loading} = UserAuth();
 
   const [roommates,setRoommates] = useState<Array<RoommatePreviewDetails> | null>();
@@ -21,20 +22,24 @@ export default function Roommates() {
 		if (!user && !loading) router.push("/auth");
 		if (user){
       const getRoommates = async () => {
-        const res = await getAvailableRoommates(user, page);
+        setLoadingRoommates(true);
+        const cityParam = city ? `&city=${city}` : "";
+        const pageParam = page ? `&page=${page}` : "";
+        const params = `${cityParam}${pageParam}`;
+        const res = await getAvailableRoommates(user, params);
         setRoommates(res);
         setLoadingRoommates(false);
       }
       getRoommates();
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[loading, page, user]);
+	},[loading, page, user, city]);
 
   return (
     <main className="py-12 px-8">
       <h1 className="flex justify-center text-2xl pb-4 font-bold italic">Find Roomies</h1>
       <div className="flex flex-wrap justify-center gap-4">
-        {roommates ? roommates.map((person: RoommatePreviewDetails, index: number)=>{
+        {(roommates && roommates.length) ? roommates.map((person: RoommatePreviewDetails, index: number)=>{
           return (
               <RoommateCard
                 key={index}
