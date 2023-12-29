@@ -48,6 +48,7 @@ export default function Searchbar({chooseLocation}: {chooseLocation: (city: stri
       <div onBlur={handleBlur} onFocus={()=>setShowAutocompleteResults(true)} tabIndex={100}>
         <div className="bg-[#FAFAFF] w-auto border-2 py-2 flex">
           <input
+            id="searchbar-input"
             value={inputValue}
             onChange={handleInputChange}
             className="bg-[#FAFAFF] ml-1"
