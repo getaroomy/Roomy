@@ -4,7 +4,12 @@ import Spinner from "@/public/spinner.svg";
 import Image from "next/image";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
 
-export default function Searchbar({chooseLocation}: {chooseLocation: (city: string) => void}) {
+export default function Searchbar({chooseLocation, placeholder}:
+  {
+    chooseLocation: (city: string) => void,
+    placeholder: string
+  }
+) {
     const {
       placePredictions,
       getPlacePredictions,
@@ -45,21 +50,21 @@ export default function Searchbar({chooseLocation}: {chooseLocation: (city: stri
     
   
     return (
-      <div onBlur={handleBlur} onFocus={()=>setShowAutocompleteResults(true)} tabIndex={100}>
-        <div className="bg-[#FAFAFF] w-auto border-2 py-2 flex">
+      <div className="w-min" onBlur={handleBlur} onFocus={()=>setShowAutocompleteResults(true)} tabIndex={100}>
+        <div className="bg-[#FAFAFF] border-2 py-2 flex">
           <input
             id="searchbar-input"
             value={inputValue}
             onChange={handleInputChange}
             className="bg-[#FAFAFF] ml-1"
-            placeholder="Santa Cruz, CA"
+            placeholder={placeholder}
           />
           {isPlacePredictionsLoading ?
             <Image src={Spinner} alt="Loading results" height={48} width={48} />
           : <MagnifyingGlassCircleIcon width={32} height={32} />}
         </div>
         { showAutocompleteResults &&
-        <div className="absolute z-[99] w-auto bg-white">
+        <div className="absolute z-[99] bg-white">
           {placePredictions.map((place, index: number)=>{return (
               <div className="p-2 border-b-2 hover:bg-slate-200" key={index}>
                 <h1 onClick={()=>handleCitySelection(place.description)} className="font-medium">📍{place.description}</h1>

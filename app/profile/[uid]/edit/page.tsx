@@ -6,6 +6,7 @@ import Image from "next/image";
 import { getUserDetails, updateUserDetails, updateProfilePicture } from "@/app/actions";
 import { UserProfileDetails } from "@/app/lib/exports";
 import UserProfileLogo from "@/public/user-profile-logo.svg";
+import Searchbar from "@/app/components/searchbar";
 
 export default function EditProfile({ params }: { params: { uid: string } }) {
     const router = useRouter();
@@ -27,6 +28,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 	const [tempProfilePicFile, setTempProfilePicFile] = useState<Blob | null>();
 	const [pictureFileName, setPictureFileName] = useState<string>("");
 	const [looking, setLooking] = useState<boolean>(false);
+	const [city, setCity] = useState<string>("");
 
 	useEffect(()=>{
 		if (!user && !loading) router.push("/auth");
@@ -56,6 +58,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 		setDoISmoke(currentUser?.preferences?.doISmoke || false);
 		setFineWithSmokers(currentUser?.preferences?.fineWithSmokers || false);
 		setLooking(currentUser?.looking || false);
+		setCity(currentUser?.city || "");
     }, [currentUser]);
 
 	const setShowPhoneNumberHandler = () => {
@@ -99,6 +102,7 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
         		fineWithSmokers,
 			},
 			looking,
+			city
 		}
 		updateUserDetails(user, userDetails);
 	}
@@ -123,6 +127,10 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 	const cancelProfilePicUpload = () => {
 		setTempProfilePic(null);
 		setTempProfilePicFile(null);
+	}
+
+	const chooseLocation = (city: string) => {
+		setCity(city);
 	}
 
 	return (
@@ -178,6 +186,10 @@ export default function EditProfile({ params }: { params: { uid: string } }) {
 							placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
 					</div>
 					<p className="mt-3 text-sm leading-6 text-gray-600">Tell fellow Roomies about yourself</p>
+				</div>
+				<div className="pb-4 col-span-full mt-2">
+					<label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">Where do you want to live?</label>
+					<Searchbar placeholder={city} chooseLocation={chooseLocation} />
 				</div>
 				{/* Phone Number */}
 				<div className="pb-8 col-span-full mt-2">

@@ -61,7 +61,7 @@ export const Navbar = (
               <p className="hover:text-violet-400">Rentals</p>
             </Link>
             <div className="md:flex gap-x-6 text-black text-lg">
-              <Searchbar chooseLocation={chooseLocation}/>
+              <Searchbar chooseLocation={chooseLocation} placeholder={"Santa Cruz, CA, USA"}/>
             </div>
           </div>
           <div className="relative text-left hidden md:block">

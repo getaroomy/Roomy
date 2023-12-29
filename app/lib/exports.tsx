@@ -17,6 +17,7 @@ export type UserProfileDetails = {
         fineWithSmokers?: boolean
     },
     status?: string,
+    city?: string
 }
 
 export type ProfileExperience = {
