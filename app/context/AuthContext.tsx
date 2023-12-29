@@ -53,6 +53,7 @@ const createUserMetadata = async (userCred: UserCredential, fullName: string, ge
             fineWithSmokers: false
         },
         status: 'Renter',
+        city: 'Santa Cruz, CA, USA'
     }
     const res = await fetch(`${serverURL}/set_user_info`, {
         headers: {
