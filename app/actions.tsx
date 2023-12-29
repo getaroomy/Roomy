@@ -54,7 +54,8 @@ export const getOtherUser = async (user: User | null, reqUID: string) => {
 export const updateProfilePicture = (user: User, file: Blob, pictureFileName: string) => {
     const storage = getStorage();
     const uid = user.uid;
-    const fileName = `profile_pictures/${uid}-${pictureFileName}`;
+    const fileType = pictureFileName.split('.').pop();
+    const fileName = `profile_pictures/${uid}.${fileType}`;
     const storageRef = ref(storage, fileName);
     uploadBytes(storageRef, file).then((snapshot) => {
         getDownloadURL(storageRef).then(async (url)=>{
