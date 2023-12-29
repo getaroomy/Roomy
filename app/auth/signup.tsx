@@ -57,7 +57,7 @@ export default function SignUp() {
                         S390.737,211.294,390.737,305.404z"/>
                 </svg>
             </button>
-            <button onClick={()=>setGender("female")} type="button" className={`text-white ${gender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center `}>
+            <button onClick={()=>setGender("female")} type="button" className={`text-white ${gender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2`}>
                 Female
                 <svg className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 512 512">
                     <path d="M256,51.2c-61.167,0-110.933,49.766-110.933,110.933S194.833,273.067,256,273.067S366.933,223.3,366.933,162.133
@@ -67,6 +67,14 @@ export default function SignUp() {
                         c0,4.719,3.823,8.533,8.533,8.533h34.133c4.71,0,8.533-3.814,8.533-8.533v-85.333h59.733c4.71,0,8.533-3.814,8.533-8.533v-34.133
                         c0-4.719-3.823-8.533-8.533-8.533H281.6v-44.749C359.962,309.769,418.133,242.261,418.133,162.133z M256,290.133
                         c-70.579,0-128-57.421-128-128s57.421-128,128-128s128,57.421,128,128S326.579,290.133,256,290.133z"/>
+                </svg>
+            </button>
+            <button onClick={()=>setGender("nonbinary")} type="button" className={`text-white ${gender === "nonbinary" ? "bg-purple-500" : "bg-slate-400"} hover:bg-purple-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center `}>
+                Nonbinary
+                <svg fill="#ffffff" className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                    <g strokeWidth="0"/>
+                    <g strokeLinecap="round" strokeLinejoin="round"/>
+                    <g><path d="M136,88.42383V59.01465l23.25049,15.625a7.99987,7.99987,0,1,0,8.9248-13.2793L142.34253,44l25.83276-17.36035a7.99987,7.99987,0,1,0-8.9248-13.2793L128,34.36133l-31.25049-21.001a7.99987,7.99987,0,1,0-8.9248,13.2793L113.65747,44,87.82471,61.36035a7.99987,7.99987,0,1,0,8.9248,13.2793L120,59.01465V88.42383a76,76,0,1,0,16,0ZM128,224a60,60,0,1,1,60-60A60.06812,60.06812,0,0,1,128,224Z"/></g>
                 </svg>
             </button>
         </div>
