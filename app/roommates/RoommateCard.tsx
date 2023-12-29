@@ -26,7 +26,7 @@ export default function RoommateCard(
         </div>
       </div>
       <div className="p-6 py-4 border-y">
-        <p className="text-sm">
+        <p className="text-sm line-clamp-4">
           {bio}
         </p>
       </div>
