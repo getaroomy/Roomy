@@ -35,3 +35,13 @@ export type RoommatePreviewDetails = {
     photoURL?: string,
     city: string
 }
+
+export type FeedPostDetails = {
+    uid: string,
+    profilePic?: string
+    displayName: string,
+    city: string,
+    post_text: string,
+    media?: Array<string>,
+    date: string
+}
