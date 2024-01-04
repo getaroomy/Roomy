@@ -27,7 +27,7 @@ export default function Home() {
     }
   },[loading, router, user]);
   return (
-    <main className="flex flex-col items-center justify-between p-24 space-y-4">
+    <main className="flex flex-col items-center justify-between p-12 space-y-4">
       <CreateFeedPost createNewPost={createNewPost} />
       {feedPosts?.length && feedPosts.map((post, index)=>{
         return (
