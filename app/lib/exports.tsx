@@ -38,7 +38,7 @@ export type RoommatePreviewDetails = {
 
 export type FeedPostDetails = {
     uid: string,
-    profilePic?: string
+    photoURL?: string
     displayName: string,
     city: string,
     post_text: string,

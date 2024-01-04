@@ -1,7 +1,8 @@
 import { User } from "firebase/auth";
-import { ProfileExperience, RoommatePreviewDetails, UserProfileDetails } from "./lib/exports";
+import { ProfileExperience, RoommatePreviewDetails, UserProfileDetails } from "@/app/lib/exports";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
+import {v4 as uuidv4} from 'uuid';
 
 // --- User Profile Actions ---
 
@@ -139,5 +140,77 @@ export const getAvailableRoommates = async (user: User, params?: string | null):
     } catch (err) {
         console.log('Error: ', err);
         throw new Error('Failed to get available roommates');
+    }
+}
+
+// -- Main Page Actions --
+
+export const createNewFeedPost = async (user: User, text: string, files?: Array<File>, city?: string) => {
+    let promises = [];
+    var imgURLS: Array<string> = [];
+    const storage = getStorage();
+    if(files?.length){
+        for (const file of files){
+            const uuid = uuidv4();
+            const fileName = `feed-images/${uuid}${file.name}`;
+            const storageRef = ref(storage, fileName);
+
+            const uploadTask = uploadBytes(storageRef, file);
+            promises.push(uploadTask.then((snapshot)=>{
+                return getDownloadURL(storageRef);
+            }));
+        }
+        try {
+            const downloadURLs = await Promise.all(promises);
+            console.log("Download URLs:", downloadURLs);
+            imgURLS = downloadURLs;
+        } catch (error) {
+            console.error("Error uploading images:", error);
+        }
+    }
+    const jwt = await user.getIdToken();
+    const date = new Date().toISOString();
+    const feedBody = {
+        uid: user.uid,
+        post_text: text,
+        media: imgURLS,
+        date,
+        city
+    }
+    const result = await fetch(`${serverURL}/create_feed_post`,{
+        headers: {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        method: 'POST',
+        body: JSON.stringify(feedBody)
+    });
+}
+
+export const getFeedPosts = async (user: User, city?: string) => {
+    try {
+        if (user === null) return null;
+        const jwt = await user.getIdToken();
+        const uid = user.uid;
+        const result = await fetch(`${serverURL}/get_feed_posts?uid=${uid}`, {
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors'
+        })
+        .then((res)=>res.json())
+        .then((val)=>{
+            return val.posts;
+        })
+        .catch((err)=>{
+            console.error(err);
+            return null;
+        });
+        return result;
+    } catch (err) {
+        console.log('Error: ', err);
+        throw new Error('Failed to get posts');
     }
 }
