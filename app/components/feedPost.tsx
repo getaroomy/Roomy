@@ -61,7 +61,7 @@ export default function FeedPost(
         <div id='post-text' className='p-2'>
             {post_text}
         </div>
-        {media &&
+        {media && media.length !== 0 &&
             <Carousel className="w-full">
                 <CarouselContent className="-ml-1 mr-1">
                     {media.map((mediaUrl, index) => (
