@@ -76,6 +76,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
     const [loading, setLoading] = useState<boolean>(true);
 
     const googleSignIn = async () => {
+        setLoading(true);
         const provider = new GoogleAuthProvider();
         provider.addScope('profile');
         provider.addScope('email');
@@ -97,6 +98,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
     }
 
     const emailSignIn = async (email:string, password:string) => {
+        setLoading(true);
         try {
             await signInWithEmailAndPassword(auth, email, password);
         } catch (err) {
@@ -106,6 +108,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
     }
 
     const emailCreateAccount = async (email:string, password:string, fullName:string, gender:string) => {
+        setLoading(true);
         try {
             await createUserWithEmailAndPassword(auth, email, password)
                 .then(async (userCred: UserCredential)=>{

@@ -9,10 +9,6 @@ export default function Auth() {
   const [isSigningIn, setIsSigningIn] = useState<boolean>(true);
   const {user, loading} = UserAuth();
   const router = useRouter();
-  
-  useEffect(()=>{
-    if (user && !loading) router.push("/");
-  },[user, loading, router]);
 
   return (
     <main className="flex min-h-screen flex-col items-center py-8">
