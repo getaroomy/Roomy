@@ -64,6 +64,10 @@ const createUserMetadata = async (userCred: UserCredential, fullName: string, ge
         method: 'POST',
         body: JSON.stringify(userInfo)
     });
+    console.group("createUserMetadata");
+    console.log(userInfo);
+    console.log(res);
+    console.groupEnd();
 }
 
 export const AuthContextProvider = ({children}: {children: React.ReactNode}) => {

@@ -1,3 +1,4 @@
+import { getAnalytics, isSupported } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
@@ -12,4 +13,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const startAnalytics = async () => {
+    const analyticsSupported = await isSupported();
+    if (analyticsSupported) getAnalytics(app);
+}
+startAnalytics();
 export const auth = getAuth(app);
