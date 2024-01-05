@@ -68,6 +68,7 @@ const createUserMetadata = async (userCred: UserCredential, fullName: string, ge
     console.log(userInfo);
     console.log(res);
     console.groupEnd();
+    return res.ok;
 }
 
 export const AuthContextProvider = ({children}: {children: React.ReactNode}) => {
@@ -79,12 +80,13 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
         provider.addScope('profile');
         provider.addScope('email');
         await signInWithPopup(auth, provider)
-            .then((userCred: UserCredential)=>{
+            .then(async (userCred: UserCredential)=>{
                 const {isNewUser} = getAdditionalUserInfo(userCred) ?? {};
                 const providerData = userCred.user.providerData;
                 const email = providerData[0]?.email ?? "emailnotfound@email.com";
                 if (isNewUser){
-                    createUserMetadata(userCred, "New User", "None", email);
+                    const userCreated = await createUserMetadata(userCred, "New User", "None", email);
+                    if (!userCreated) console.log("Error creating user account through Google sign in");
                 }
                 else console.log("User already exists with this Gmail account!");
             })
@@ -106,7 +108,10 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
     const emailCreateAccount = async (email:string, password:string, fullName:string, gender:string) => {
         try {
             await createUserWithEmailAndPassword(auth, email, password)
-                .then((userCred: UserCredential)=>createUserMetadata(userCred, fullName, gender, email))
+                .then(async (userCred: UserCredential)=>{
+                    const userCreated = await createUserMetadata(userCred, fullName, gender, email);
+                    if (!userCreated) console.log("Error creating user account through email and password");
+                })
                 .catch((err)=>{
                     console.error(err);
                 })

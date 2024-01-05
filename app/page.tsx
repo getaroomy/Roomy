@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(()=>{
     if (!user && !loading) router.push("/auth");
-    if (user) {
+    if (user && !loading) {
       const getFeedPostsFromServer = async () => {
         const res = await getFeedPosts(user);
         setFeedPosts(res);
