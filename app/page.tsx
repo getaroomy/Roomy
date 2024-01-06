@@ -26,6 +26,7 @@ export default function Home() {
       getFeedPostsFromServer();
     }
   },[loading, router, user]);
+  
   return (
     <main className="flex flex-col items-center justify-between p-12 space-y-4">
       <CreateFeedPost createNewPost={createNewPost} />

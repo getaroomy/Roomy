@@ -15,17 +15,17 @@ const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 interface AuthContextType {
     user: User | null,
-    googleSignIn: () => void,
-    emailSignIn: (email:string, password:string) => void,
-    emailCreateAccount: (email:string, password:string, fullName:string, gender:string) => void,
+    googleSignIn: () => Promise<boolean>,
+    emailSignIn: (email:string, password:string) => Promise<boolean>,
+    emailCreateAccount: (email:string, password:string, fullName:string, gender:string) => Promise<boolean>,
     logOut: () => void,
     loading: boolean
 }
 const defaultAuthContext: AuthContextType = {
     user: null,
-    googleSignIn: () => {},
-    emailSignIn: (email:string, password:string) => {},
-    emailCreateAccount: (email:string, password:string, fullName:string, gender:string) => {},
+    googleSignIn: async () => true,
+    emailSignIn: async (email:string, password:string) => true,
+    emailCreateAccount: async (email:string, password:string, fullName:string, gender:string) => true,
     logOut: () => {},
     loading: true
 }
@@ -64,10 +64,6 @@ const createUserMetadata = async (userCred: UserCredential, fullName: string, ge
         method: 'POST',
         body: JSON.stringify(userInfo)
     });
-    console.group("createUserMetadata");
-    console.log(userInfo);
-    console.log(res);
-    console.groupEnd();
     return res.ok;
 }
 
@@ -80,6 +76,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
         const provider = new GoogleAuthProvider();
         provider.addScope('profile');
         provider.addScope('email');
+        var signedin = false;
         await signInWithPopup(auth, provider)
             .then(async (userCred: UserCredential)=>{
                 const {isNewUser} = getAdditionalUserInfo(userCred) ?? {};
@@ -90,11 +87,13 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
                     if (!userCreated) console.log("Error creating user account through Google sign in");
                 }
                 else console.log("User already exists with this Gmail account!");
+                signedin = true;
             })
             .catch((err)=>{
                 console.error(err);
             })
         setLoading(false);
+        return signedin;
     }
 
     const emailSignIn = async (email:string, password:string) => {
@@ -105,6 +104,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
             console.log("Error logging in through email:", err);
         }
         setLoading(false);
+        return true;
     }
 
     const emailCreateAccount = async (email:string, password:string, fullName:string, gender:string) => {
@@ -122,6 +122,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
             console.log("Error creating acc with email:", err);
         }
         setLoading(false);
+        return true;
     }
 
     const logOut = () => {
