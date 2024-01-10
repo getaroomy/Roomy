@@ -12,7 +12,7 @@ export default function SignIn({emailSigninAuth, googleAuth}:{
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center py-8">
+    <main className="flex flex-col items-center py-8">
       <div className="px-6 sm:px-0 max-w-md" onClick={googleAuth}>
         <button type="button" className="text-white w-full  bg-purple-400 hover:bg-purple-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between mr-2 mb-2">
             <svg className="mr-2 -ml-1 w-4 h-4" aria-hidden="true" viewBox="0 0 488 512">

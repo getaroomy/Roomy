@@ -14,7 +14,7 @@ export default function SignUp({emailCreateAccountAuth, googleAuth}:{
     }
 
     return (
-      <main className="flex min-h-screen flex-col items-center py-8">
+      <main className="flex flex-col items-center py-8">
         <div className="px-6 sm:px-0 max-w-md" onClick={googleAuth}>
             <button type="button" className="text-white w-full  bg-purple-400 hover:bg-purple-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between mr-2 mb-2">
                 <svg className="mr-2 -ml-1 w-4 h-4" aria-hidden="true" viewBox="0 0 488 512">
@@ -43,8 +43,8 @@ export default function SignUp({emailCreateAccountAuth, googleAuth}:{
             disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" required/>
         </label>
         <span className="block pt-4 text-lg font-medium text-slate-700">Gender</span>
-        <div className="flex flex-row py-8">
-            <button onClick={()=>setGender("male")} type="button" className={`text-white ${gender === "male" ? "bg-blue-800" : "bg-slate-400"} hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 `}>
+        <div className="flex flex-wrap gap-5 justify-center py-4">
+            <button onClick={()=>setGender("male")} type="button" className={`text-white ${gender === "male" ? "bg-blue-800" : "bg-slate-400"} hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center `}>
                 Male
                 <svg className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 512 512">
                     <path d="M220.07,152.702c-84.202,0-152.702,68.5-152.702,152.702s68.5,152.702,152.702,152.702s152.702-68.5,152.702-152.702
@@ -57,7 +57,7 @@ export default function SignUp({emailCreateAccountAuth, googleAuth}:{
                         S390.737,211.294,390.737,305.404z"/>
                 </svg>
             </button>
-            <button onClick={()=>setGender("female")} type="button" className={`text-white ${gender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2`}>
+            <button onClick={()=>setGender("female")} type="button" className={`text-white ${gender === "female" ? "bg-pink-400" : "bg-slate-400"} hover:bg-pink-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center`}>
                 Female
                 <svg className="rtl:rotate-180 w-5 h-5 ms-2 fill-red-50" viewBox="0 0 512 512">
                     <path d="M256,51.2c-61.167,0-110.933,49.766-110.933,110.933S194.833,273.067,256,273.067S366.933,223.3,366.933,162.133

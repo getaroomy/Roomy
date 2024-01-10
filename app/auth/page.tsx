@@ -28,11 +28,11 @@ export default function Auth() {
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center py-8">
-        <h1>Auth</h1>
+    <main className="flex min-h-screen flex-col items-center py-8 bg-gradient-to-br from-slate-50 to-purple-100">
+        <h1 className="font-bold text-xl">Welcome</h1>
         <div className="flex flex-row py-8">
-            <h1 className={`px-8`} onClick={()=>setIsSigningIn(true)}>Sign In</h1>
-            <h1 className={`px-8`} onClick={()=>setIsSigningIn(false)}>Sign Up</h1>
+            <button className={`px-8 ${isSigningIn && "border-b-2 border-purple-500 transition-all duration-100"}`} onClick={()=>setIsSigningIn(true)}>Sign In</button>
+            <button className={`px-8 ${!isSigningIn && "border-b-2 border-purple-500 transition-all duration-100"}`} onClick={()=>setIsSigningIn(false)}>Sign Up</button>
         </div>
         {isSigningIn ?
         <SignIn
