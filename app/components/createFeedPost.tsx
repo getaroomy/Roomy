@@ -32,6 +32,7 @@ export default function CreateFeedPost({createNewPost}: {createNewPost: (text: s
         <div className='w-full md:w-1/2 lg:w-1/2 bg-white shadow-md p-4'>
             <h1 className='text-lg font-bold'>Create a Post</h1>
             <textarea
+                id='createPostInput'
                 className='pt-1 w-full outline-none'
                 placeholder='Start yappin..'
                 value={postText}
