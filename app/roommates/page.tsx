@@ -39,7 +39,7 @@ export default function Roommates() {
     <main className="py-12 px-8">
       <h1 className="flex justify-center text-2xl pb-4 font-bold italic">Find Roomies</h1>
       <div className="flex flex-wrap justify-center gap-4">
-        {(roommates && roommates.length) ? roommates.map((person: RoommatePreviewDetails, index: number)=>{
+        {(roommates && roommates.length !== 0) ? roommates.map((person: RoommatePreviewDetails, index: number)=>{
           return (
               <RoommateCard
                 key={index}

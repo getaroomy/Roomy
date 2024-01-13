@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between p-12 space-y-4">
       <CreateFeedPost createNewPost={createNewPost} />
-      {(feedPosts && feedPosts?.length) ? feedPosts.map((post, index)=>{
+      {(feedPosts && feedPosts?.length !== 0) ? feedPosts.map((post, index)=>{
         return (
           <FeedPost key={index}
             uid={post.uid}
