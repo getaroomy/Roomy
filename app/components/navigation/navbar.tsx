@@ -47,7 +47,7 @@ export const Navbar = (
   }
 
   return (
-    <div className="w-full bg-[#ffffff] h-20 sticky top-0">
+    <div className="w-full bg-[#ffffff] h-20 sticky z-[999] top-0">
       <div className="container mx-auto px-4 h-full">
         <div className="flex justify-between items-center h-full">
           <div className="flex items-center space-x-8">
@@ -58,7 +58,7 @@ export const Navbar = (
               <p className="hover:text-violet-400">Roommates</p>
             </Link>
             <Link href="/rentals" className="hidden md:flex gap-x-6 text-black text-lg">
-              <p className="hover:text-violet-400">Rentals</p>
+              <p className="hover:text-violet-400 line-through">Rentals</p>
             </Link>
             <div className="md:flex gap-x-6 text-black text-lg">
               <Searchbar chooseLocation={chooseLocation} placeholder={"Santa Cruz, CA, USA"}/>

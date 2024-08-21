@@ -46,7 +46,7 @@ export const Sidebar = (
           </li>
           <li>
             <Link href="/rentals" onClick={toggle}>
-              <p>Rentals</p>
+              <p className="line-through">Rentals</p>
             </Link>
           </li>
           <li>

@@ -75,8 +75,12 @@ export default function FeedPost(
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                <CarouselPrevious className='bg-white' />
-                <CarouselNext className='bg-white' />
+                {media.length > 1 && (
+                    <>
+                        <CarouselPrevious className='bg-white' />
+                        <CarouselNext className='bg-white' />
+                    </>
+                )}
             </Carousel>
         }
     </div>
